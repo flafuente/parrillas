@@ -21,13 +21,6 @@ Toolbar::render();
     <form method="post" action="<?=Url::site()?>" id="mainForm" name="mainForm" class="form-inline" role="form">
         <input type="hidden" name="app" id="app" value="tipos">
         <input type="hidden" name="action" id="action" value="">
-        <!-- Filters -->
-        <div class="row filters">
-            <!-- Search -->
-            <div class="col-sm-3 col-xs-6 filter">
-                <?=HTML::search();?>
-            </div>
-        </div>
         <!-- Results -->
         <?php if (count($results)) { ?>
             <div class="table-responsive">

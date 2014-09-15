@@ -90,7 +90,7 @@ Toolbar::render();
                             Color
                         </label>
                         <div class="col-sm-8">
-                            <input type="text" id="color" name="color" class="form-control" value="<?=Helper::sanitize($tipo->color);?>">
+                            <input type="text" id="color" name="color" class="form-control color-picker" value="<?=Helper::sanitize($tipo->color);?>">
                         </div>
                     </div>
                 </div>
