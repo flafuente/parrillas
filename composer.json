@@ -1,0 +1,13 @@
+{
+	"autoload": {
+		"classmap": [
+			"classes/",
+			"libs/"
+		]
+	},
+	"require": {
+		"light-framework/core": "dev-master",
+		"robmorgan/phinx": "*"
+	},
+	"minimum-stability": "dev"
+}

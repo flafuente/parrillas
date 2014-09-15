@@ -1,0 +1,163 @@
+<?php defined('_EXE') or die('Restricted access'); ?>
+
+<?php
+//Toolbar
+if ($entrada->id) {
+    $subtitle = "Editar entrada";
+    $title = "Guardar";
+} else {
+    $subtitle = "Nueva entrada";
+    $title = "Crear";
+}
+Toolbar::addTitle("Entradas", "glyphicon-star", $subtitle);
+if ($entrada->id) {
+    //Delete button
+    Toolbar::addButton(
+        array(
+            "title" => "Eliminar",
+            "app" => "entradas",
+            "action" => "delete",
+            "class" => "danger",
+            "spanClass" => "remove",
+            "confirmation" => "¿Deseas realmente eliminar esta entrada?",
+            "noAjax" => true,
+        )
+    );
+}
+//Cancel button
+Toolbar::addButton(
+    array(
+        "title" => "Cancelar",
+        "link" => Url::site("entradas"),
+        "class" => "primary",
+        "spanClass" => "chevron-left",
+    )
+);
+//Save button
+Toolbar::addButton(
+    array(
+        "title" => $title,
+        "app" => "entradas",
+        "action" => "save",
+        "class" => "success",
+        "spanClass" => "ok",
+    )
+);
+Toolbar::render();
+?>
+
+<form method="post" name="mainForm" id="mainForm" action="<?=Url::site();?>" class="form-horizontal ajax" role="form" autocomplete="off">
+    <input type="hidden" name="app" id="app" value="entradas">
+    <input type="hidden" name="action" id="action" value="save">
+    <input type="hidden" name="id" value="<?=$entrada->id?>">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-6">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        Entrada
+                    </div>
+                    <div class="panel-body">
+                        <?php if (!empty($tipos)) { ?>
+                            <!-- Tipo -->
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">
+                                    Tipo
+                                </label>
+                                <div class="col-sm-8">
+                                    <?=HTML::select("tipoId", $tipos, $entrada->tipoId, array("id" => "tipoId", "class" => "select2"), null, array("display" => "nombre")); ?>
+                                </div>
+                            </div>
+                        <?php } ?>
+                        <!-- Nombre -->
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">
+                                Nombre
+                            </label>
+                            <div class="col-sm-8">
+                                <input type="text" id="nombre" name="nombre" class="form-control" value="<?=Helper::sanitize($entrada->nombre);?>">
+                            </div>
+                        </div>
+                        <!-- House Number -->
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">
+                                House Number
+                            </label>
+                            <div class="col-sm-8">
+                                <input type="text" id="houseNumber" name="houseNumber" class="form-control" value="<?=Helper::sanitize($entrada->houseNumber);?>">
+                            </div>
+                        </div>
+                        <!-- Segmento -->
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">
+                                Segmento
+                            </label>
+                            <div class="col-sm-8">
+                                <input type="hidden" name="segmento" value="0">
+                                <input type="checkbox" class="switch" name="segmento" id="segmento" value="1" <?php if($entrada->segmento) echo "checked";?>>
+                            </div>
+                        </div>
+                        <?php if (!empty($moscas)) { ?>
+                            <!-- Mosca -->
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">
+                                    Mosca
+                                </label>
+                                <div class="col-sm-8">
+                                    <?=HTML::select("moscaId", $moscas, $entrada->moscaId, array("id" => "moscaId", "class" => "select2"), null, array("display" => "nombre")); ?>
+                                </div>
+                            </div>
+                        <?php } ?>
+                        <!-- TC IN -->
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">
+                                TC IN
+                            </label>
+                            <div class="col-sm-8">
+                                <input type="text" id="tcIn" name="tcIn" class="form-control" value="<?=Helper::sanitize($entrada->tcIn);?>" placeholder="HH:MM:SS:FR">
+                            </div>
+                        </div>
+                        <!-- TC OUT -->
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">
+                                TC OUT
+                            </label>
+                            <div class="col-sm-8">
+                                <input type="text" id="tcOut" name="tcOut" class="form-control" value="<?=Helper::sanitize($entrada->tcOut);?>" placeholder="HH:MM:SS:FR">
+                            </div>
+                        </div>
+                        <!-- Duración -->
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">
+                                Duración
+                            </label>
+                            <div class="col-sm-8">
+                                <input type="text" id="duracion" name="duracion" class="form-control" value="<?=Helper::sanitize($entrada->duracion);?>" placeholder="HH:MM:SS:FR">
+                            </div>
+                        </div>
+                        <?php if (!empty($entradas)) { ?>
+                            <!-- Entrada ED -->
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">
+                                    ED
+                                </label>
+                                <div class="col-sm-8">
+                                    <?=HTML::select("entradaIdEd", $entradas, $entrada->entradaIdEd, array("id" => "entradaIdEd", "class" => "select2"), null, array("display" => "nombre")); ?>
+                                </div>
+                            </div>
+                            <!-- Entrada FIN -->
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">
+                                    FIN
+                                </label>
+                                <div class="col-sm-8">
+                                    <?=HTML::select("entradaIdFin", $entradas, $entrada->entradaIdFin, array("id" => "entradaIdFin", "class" => "select2"), null, array("display" => "nombre")); ?>
+                                </div>
+                            </div>
+                        <?php } ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
