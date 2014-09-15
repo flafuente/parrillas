@@ -63,7 +63,11 @@ class Tipo extends Model
     public function checkMascara($houseNumber)
     {
         if ($this->mascara) {
-
+            for ($i = 0; $i <= strlen($this->mascara); $i++) {
+                if ($houseNumber[$i] != $this->mascara[$i] && $this->mascara[$i] != "X") {
+                    return false;
+                }
+            }
         }
 
         return true;
@@ -113,6 +117,7 @@ class Tipo extends Model
     {
         //Creation Date
         $this->dateInsert = date("Y-m-d H:i:s");
+        $this->mascara = strtoupper($this->mascara);
     }
 
     /**
@@ -135,6 +140,7 @@ class Tipo extends Model
     {
         //Update Date
         $this->dateUpdate = date("Y-m-d H:i:s");
+        $this->mascara = strtoupper($this->mascara);
     }
 
     /**

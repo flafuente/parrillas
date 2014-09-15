@@ -187,14 +187,14 @@ Toolbar::render();
     <?php } ?>
 
     //House Number autocomplete
-    $(document).on('keyup', '#houseNumber', function (e) {
+    $(document).on('input', '#houseNumber', function (e) {
 
         //Elements
         var form = $("#mainForm");
         var field = $(this);
 
         //To Upper
-        field.val(field.val().toUpperCase());
+        //field.val(field.val().toUpperCase());
 
         //Remove previous errors
         $(this).addClass("is-autocheck-loading");
