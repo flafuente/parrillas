@@ -114,6 +114,9 @@ class Entrada extends Model
         } elseif (Self::getBy("nombre", $this->nombre, $this->id)) {
             Registry::addMessage("Este nombre ya está siendo utilizado", "error", "nombre");
         }
+        //Check houseNumber
+        Self::checkHouseNumber($this->houseNumber, $this->tipoId);
+
         //Return messages avoiding deletion
         return Registry::getMessages(true);
     }
