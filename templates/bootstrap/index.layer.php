@@ -14,6 +14,11 @@
         <link href="<?=Url::template("css/bootstrap-switch.min.css");?>" media="screen" rel="stylesheet" type="text/css" />
         <!-- Bootstrap Ladda Plugin -->
         <link href="<?=Url::template("css/ladda-themeless.min.css");?>" media="screen" rel="stylesheet" type="text/css" />
+        <!-- Bootstrap Color-Picker Plugin -->
+        <link href="<?=Url::template("css/bootstrap-colorpicker.min.css");?>" media="screen" rel="stylesheet" type="text/css" />
+        <!-- Select2 Plugin -->
+        <link href="<?=Url::template("css/select2.css");?>" media="screen" rel="stylesheet" type="text/css" />
+        <link href="<?=Url::template("css/select2-bootstrap.css");?>" media="screen" rel="stylesheet" type="text/css" />
         <!-- Custom CSS -->
         <link href="<?=Url::template("css/custom.css");?>" media="screen" rel="stylesheet" type="text/css" />
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -30,11 +35,18 @@
         <script src="<?=Url::template("js/bootstrap.min.js");?>" type="text/javascript"></script>
         <!-- JQuery Forms Plugin -->
         <script src="<?=Url::template("js/jquery.forms.js");?>" type="text/javascript"></script>
+        <!-- Select2 Plugin -->
+        <script src="<?=Url::template("js/select2.min.js");?>" type="text/javascript"></script>
+        <script src="<?=Url::template("js/select2_locale_es.js");?>" type="text/javascript"></script>
         <!-- Bootstrap Switch Plugin -->
         <script src="<?=Url::template("js/bootstrap-switch.min.js");?>" type="text/javascript"></script>
         <!-- Bootstrap Ladda Plugin -->
         <script src="<?=Url::template("js/spin.min.js");?>" type="text/javascript"></script>
         <script src="<?=Url::template("js/ladda.min.js");?>" type="text/javascript"></script>
+        <!-- JQuery Mask Plugin -->
+        <script src="<?=Url::template("js/jquery.mask.min.js");?>" type="text/javascript"></script>
+        <!-- Bootstrap Color-Picker Plugin -->
+        <script src="<?=Url::template("js/bootstrap-colorpicker.min.js");?>" type="text/javascript"></script>
         <!-- Framework JS -->
         <script src="<?=Url::template("js/lightFramework.js");?>" type="text/javascript"></script>
         <script src="<?=Url::template("js/init.js");?>" type="text/javascript"></script>

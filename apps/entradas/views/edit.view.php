@@ -123,7 +123,7 @@ Toolbar::render();
                             TC IN
                         </label>
                         <div class="col-sm-8">
-                            <input type="text" id="tcIn" name="tcIn" class="form-control" value="<?=Helper::sanitize($entrada->tcIn);?>" placeholder="HH:MM:SS:FR">
+                            <input type="text" id="tcIn" name="tcIn" class="form-control dateMask" value="<?=Helper::sanitize($entrada->tcIn);?>" placeholder="HH:MM:SS:FR">
                         </div>
                     </div>
                     <!-- TC OUT -->
@@ -132,7 +132,7 @@ Toolbar::render();
                             TC OUT
                         </label>
                         <div class="col-sm-8">
-                            <input type="text" id="tcOut" name="tcOut" class="form-control" value="<?=Helper::sanitize($entrada->tcOut);?>" placeholder="HH:MM:SS:FR">
+                            <input type="text" id="tcOut" name="tcOut" class="form-control dateMask" value="<?=Helper::sanitize($entrada->tcOut);?>" placeholder="HH:MM:SS:FR">
                         </div>
                     </div>
                     <!-- Duración -->
@@ -171,6 +171,9 @@ Toolbar::render();
 </form>
 
 <script>
+
+    //Date Mask
+    $('input.dateMask').mask("00:00:00:00");
 
     <?php if (!empty($tipos)) { ?>
         //Tipo change

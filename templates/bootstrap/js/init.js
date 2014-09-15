@@ -38,4 +38,8 @@ $(document).ready(function(){
 	$(".change-submit").changeSubmit();
 	//Form Buttons
 	$(".formButton").formButton();
+	//Select2
+	$(".select2").select2();
+	//Color-picker
+	$('.color-picker').colorpicker();
 });
