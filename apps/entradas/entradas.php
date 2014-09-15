@@ -35,16 +35,24 @@ class entradasController extends Controller
         $this->render($html);
     }
 
-    public function save()
+    public function saveNew()
     {
+        $this->save(Url::site("entradas/edit"));
+    }
+
+    public function save($redirect = false)
+    {
+        if (!$redirect) {
+            $redirect = Url::site("entradas");
+        }
         $entrada = new Entrada($_REQUEST['id']);
         if ($entrada->id) {
             if ($entrada->update($_REQUEST)) {
-                Registry::addMessage("Entrada actualizada satisfactoriamente", "success", "", Url::site("entradas"));
+                Registry::addMessage("Entrada actualizada satisfactoriamente", "success", "", $redirect);
             }
         } else {
             if ($entrada->insert($_REQUEST)) {
-                Registry::addMessage("Entrada creada satisfactoriamente", "success", "", Url::site("entradas"));
+                Registry::addMessage("Entrada creada satisfactoriamente", "success", "", $redirect);
             }
         }
         $this->ajax();

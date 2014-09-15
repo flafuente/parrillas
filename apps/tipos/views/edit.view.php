@@ -52,47 +52,45 @@ Toolbar::render();
     <input type="hidden" name="id" value="<?=$tipo->id?>">
     <div class="row">
         <div class="col-md-12">
-            <div class="col-md-6">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        Tipo de entrada
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    Tipo de entrada
+                </div>
+                <div class="panel-body">
+                    <!-- Código -->
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">
+                            Código
+                        </label>
+                        <div class="col-sm-8">
+                            <input type="text" id="codigo" name="codigo" class="form-control" value="<?=Helper::sanitize($tipo->codigo);?>">
+                        </div>
                     </div>
-                    <div class="panel-body">
-                        <!-- Código -->
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label">
-                                Código
-                            </label>
-                            <div class="col-sm-8">
-                                <input type="text" id="codigo" name="codigo" class="form-control" value="<?=Helper::sanitize($tipo->codigo);?>">
-                            </div>
+                    <!-- Nombre -->
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">
+                            Nombre
+                        </label>
+                        <div class="col-sm-8">
+                            <input type="text" id="nombre" name="nombre" class="form-control" value="<?=Helper::sanitize($tipo->nombre);?>">
                         </div>
-                        <!-- Nombre -->
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label">
-                                Nombre
-                            </label>
-                            <div class="col-sm-8">
-                                <input type="text" id="nombre" name="nombre" class="form-control" value="<?=Helper::sanitize($tipo->nombre);?>">
-                            </div>
+                    </div>
+                    <!-- Máscara -->
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">
+                            Máscara
+                        </label>
+                        <div class="col-sm-8">
+                            <input type="text" id="mascara" name="mascara" class="form-control" value="<?=Helper::sanitize($tipo->mascara);?>">
                         </div>
-                        <!-- Máscara -->
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label">
-                                Máscara
-                            </label>
-                            <div class="col-sm-8">
-                                <input type="text" id="mascara" name="mascara" class="form-control" value="<?=Helper::sanitize($tipo->mascara);?>">
-                            </div>
-                        </div>
-                        <!-- Color -->
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label">
-                                Color
-                            </label>
-                            <div class="col-sm-8">
-                                <input type="text" id="color" name="color" class="form-control" value="<?=Helper::sanitize($tipo->color);?>">
-                            </div>
+                    </div>
+                    <!-- Color -->
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">
+                            Color
+                        </label>
+                        <div class="col-sm-8">
+                            <input type="text" id="color" name="color" class="form-control" value="<?=Helper::sanitize($tipo->color);?>">
                         </div>
                     </div>
                 </div>
