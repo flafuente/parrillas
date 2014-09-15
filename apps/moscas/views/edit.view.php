@@ -58,15 +58,6 @@ Toolbar::render();
                         Tipo de entrada
                     </div>
                     <div class="panel-body">
-                        <!-- Nombre -->
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label">
-                                Nombre
-                            </label>
-                            <div class="col-sm-8">
-                                <input type="text" id="nombre" name="nombre" class="form-control" value="<?=Helper::sanitize($mosca->nombre);?>">
-                            </div>
-                        </div>
                         <!-- Código -->
                         <div class="form-group">
                             <label class="col-sm-3 control-label">
@@ -74,6 +65,15 @@ Toolbar::render();
                             </label>
                             <div class="col-sm-8">
                                 <input type="text" id="codigo" name="codigo" class="form-control" value="<?=Helper::sanitize($mosca->codigo);?>">
+                            </div>
+                        </div>
+                        <!-- Nombre -->
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">
+                                Nombre
+                            </label>
+                            <div class="col-sm-8">
+                                <input type="text" id="nombre" name="nombre" class="form-control" value="<?=Helper::sanitize($mosca->nombre);?>">
                             </div>
                         </div>
                     </div>

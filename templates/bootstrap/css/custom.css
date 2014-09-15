@@ -75,3 +75,19 @@ div.filters div.filter{
 div.filters div.filter select{
 	width: 100%;
 }
+
+input[type="text"].validate {
+	background-repeat: no-repeat;
+	background-position: right center;
+	background-position-x: 98%;
+}
+input[type="text"].is-autocheck-loading{
+	background-image: url("../img/loading.gif");
+	background-size: 16px;
+}
+input[type="text"].is-autocheck-successful{
+	background-image: url("../img/success.png");
+}
+input[type="text"].is-autocheck-faliure{
+	background-image: url("../img/error.png");
+}

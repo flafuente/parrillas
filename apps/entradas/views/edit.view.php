@@ -84,7 +84,7 @@ Toolbar::render();
                                 House Number
                             </label>
                             <div class="col-sm-8">
-                                <input type="text" id="houseNumber" name="houseNumber" class="form-control" value="<?=Helper::sanitize($entrada->houseNumber);?>">
+                                <input type="text" id="houseNumber" name="houseNumber" class="form-control validate" value="<?=Helper::sanitize($entrada->houseNumber);?>">
                             </div>
                         </div>
                         <!-- Segmento -->
@@ -132,12 +132,12 @@ Toolbar::render();
                                 Duración
                             </label>
                             <div class="col-sm-8">
-                                <input type="text" id="duracion" name="duracion" class="form-control" value="<?=Helper::sanitize($entrada->duracion);?>" placeholder="HH:MM:SS:FR">
+                                <input type="text" readonly="true" id="duracion" name="duracion" class="form-control" value="<?=Helper::sanitize($entrada->duracion);?>" placeholder="HH:MM:SS:FR">
                             </div>
                         </div>
                         <?php if (!empty($entradas)) { ?>
                             <!-- Entrada ED -->
-                            <div class="form-group">
+                            <div class="form-group edfin">
                                 <label class="col-sm-3 control-label">
                                     ED
                                 </label>
@@ -146,7 +146,7 @@ Toolbar::render();
                                 </div>
                             </div>
                             <!-- Entrada FIN -->
-                            <div class="form-group">
+                            <div class="form-group edfin">
                                 <label class="col-sm-3 control-label">
                                     FIN
                                 </label>
@@ -161,3 +161,67 @@ Toolbar::render();
         </div>
     </div>
 </form>
+
+<script>
+
+    <?php if (!empty($tipos)) { ?>
+        //Tipo change
+        var tipos = Array();
+
+        <?php foreach ($tipos as $tipo) { ?>
+            tipos[<?=$tipo->id?>] = {mascara: "<?=$tipo->mascara;?>", codigo: "<?=$tipo->codigo;?>"};
+        <?php } ?>
+
+        $(document).on('change', '#tipoId', function (e) {
+            //House Number helper
+            $("#houseNumber").attr("placeholder", tipos[$(this).val()].mascara);
+            //ED/FIN
+            if (tipos[$(this).val()].codigo.toUpperCase() == "P") {
+                $(".edfin").show();
+            } else {
+                $(".edfin").hide();
+            }
+        });
+        $("#tipoId").change();
+
+    <?php } ?>
+
+    //House Number autocomplete
+    $(document).on('keyup', '#houseNumber', function (e) {
+
+        //Elements
+        var form = $("#mainForm");
+        var field = $(this);
+
+        //To Upper
+        field.val(field.val().toUpperCase());
+
+        //Remove previous errors
+        $(this).addClass("is-autocheck-loading");
+        $(this).removeClass("is-autocheck-faliure");
+        $(this).removeClass("is-autocheck-successful");
+        field.parent().find("span.help-block").remove();
+        field.parent().parent().removeClass("has-error");
+
+        //Ajax
+        $.ajax({
+            type: "POST",
+            url: "<?=Url::site('entradas/ajaxCheckHouseNumber')?>",
+            data: {
+                "houseNumber": $(this).val(),
+                "tipoId": $("#tipoId").val()
+            },
+            dataType: "json"
+        }).done(function (data) {
+            field.removeClass("is-autocheck-loading");
+
+            //Errors?
+            if (data.data.status != "ok") {
+                field.addClass("is-autocheck-faliure");
+                processMessages(data.messages, form)
+            } else {
+                field.addClass("is-autocheck-successful");
+            }
+        });
+    });
+</script>

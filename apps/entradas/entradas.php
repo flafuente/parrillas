@@ -30,6 +30,7 @@ class entradasController extends Controller
         $this->setData("entrada", new Entrada($url->vars[0]));
         $this->setData("moscas", Mosca::select());
         $this->setData("tipos", Tipo::select());
+        $this->setData("entradas", Entrada::select());
         $html = $this->view("views.edit");
         $this->render($html);
     }
@@ -60,5 +61,15 @@ class entradasController extends Controller
             }
         }
         Url::redirect(Url::site("entradas"));
+    }
+
+    public function ajaxCheckHouseNumber()
+    {
+        if (Entrada::checkHouseNumber($_REQUEST["houseNumber"], $_REQUEST["tipoId"])) {
+            $data["status"] = "ok";
+        } else {
+            $data["status"] = "error";
+        }
+        $this->ajax($data);
     }
 }

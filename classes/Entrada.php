@@ -138,6 +138,8 @@ class Entrada extends Model
     {
         //Creation Date
         $this->dateInsert = date("Y-m-d H:i:s");
+        //Clear ED & FIN
+        $this->clearEdFin();
     }
 
     /**
@@ -156,10 +158,47 @@ class Entrada extends Model
      *
      * @return void
      */
-    public function preUpdate($data=array())
+    public function preUpdate()
     {
         //Update Date
         $this->dateUpdate = date("Y-m-d H:i:s");
+        //Clear ED & FIN
+        $this->clearEdFin();
+    }
+
+    private function clearEdFin()
+    {
+        $tipo = new Tipo($this->tipoId);
+        if (strtoupper($tipo->codigo) != "P") {
+            $this->entradaIdEd = 0;
+            $this->entradaIdFin = 0;
+        }
+    }
+
+    public static function checkHouseNumber($houseNumber, $tipoId)
+    {
+        $tipo = new Tipo($tipoId);
+        if (!$tipo->id) {
+            Registry::addMessage("Debes seleccionar un tipo primero", "warning", "houseNumber");
+        } else {
+            // Siempre 14 Caracteres
+            if (strlen($houseNumber) != 14) {
+                Registry::addMessage("La numeración debe tener 14 caracteres", "error", "houseNumber");
+            } else {
+                /// No puede haber 2 iguales
+                if (Self::getBy("houseNumber", $houseNumber)) {
+                    Registry::addMessage("Ya existe otra entrada con esta numeración", "error", "houseNumber");
+                } else {
+                    // Máscara
+                    if (!$tipo->checkMascara($houseNumber)) {
+                        Registry::addMessage("La numeración no coincide con su tipo: ".$tipo->mascara, "error", "houseNumber");
+                    }
+                }
+            }
+        }
+
+        //Return messages avoiding deletion
+        return !Registry::getMessages(true);
     }
 
     /**

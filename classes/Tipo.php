@@ -26,6 +26,12 @@ class Tipo extends Model
     public $codigo;
 
     /**
+     * Máscara
+     * @var string
+     */
+    public $mascara;
+
+    /**
      * Color
      * @var string
      */
@@ -52,6 +58,15 @@ class Tipo extends Model
     {
         parent::$dbTable = "tipos";
         parent::$reservedVarsChild = self::$reservedVarsChild;
+    }
+
+    public function checkMascara($houseNumber)
+    {
+        if ($this->mascara) {
+
+        }
+
+        return true;
     }
 
     /**

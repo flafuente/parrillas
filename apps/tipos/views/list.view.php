@@ -37,6 +37,7 @@ Toolbar::render();
                             <th><?=Html::sortableLink("id", "Id");?></th>
                             <th><?=Html::sortableLink("codigo", "Código");?></th>
                             <th><?=Html::sortableLink("nombre", "Nombre");?></th>
+                            <th><?=Html::sortableLink("mascara", "Máscara");?></th>
                             <th><?=Html::sortableLink("color", "Color");?></th>
                             <th><?=Html::sortableLink("dateInsert", "Fecha creación");?></th>
                             <th><?=Html::sortableLink("dateUpdate", "Fecha actualización");?></th>
@@ -49,6 +50,7 @@ Toolbar::render();
                                 <td><?=$tipo->id;?></a></td>
                                 <td><?=Helper::sanitize($tipo->codigo);?></td>
                                 <td><?=Helper::sanitize($tipo->nombre);?></td>
+                                <td><?=Helper::sanitize($tipo->mascara);?></td>
                                 <td><?=Helper::sanitize($tipo->color);?></td>
                                 <td><?=Helper::humanDate($tipo->dateInsert);?></td>
                                 <td><?=Helper::humanDate($tipo->dateUpdate);?></td>

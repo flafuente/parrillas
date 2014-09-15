@@ -58,6 +58,15 @@ Toolbar::render();
                         Tipo de entrada
                     </div>
                     <div class="panel-body">
+                        <!-- Código -->
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">
+                                Código
+                            </label>
+                            <div class="col-sm-8">
+                                <input type="text" id="codigo" name="codigo" class="form-control" value="<?=Helper::sanitize($tipo->codigo);?>">
+                            </div>
+                        </div>
                         <!-- Nombre -->
                         <div class="form-group">
                             <label class="col-sm-3 control-label">
@@ -67,13 +76,13 @@ Toolbar::render();
                                 <input type="text" id="nombre" name="nombre" class="form-control" value="<?=Helper::sanitize($tipo->nombre);?>">
                             </div>
                         </div>
-                        <!-- Código -->
+                        <!-- Máscara -->
                         <div class="form-group">
                             <label class="col-sm-3 control-label">
-                                Código
+                                Máscara
                             </label>
                             <div class="col-sm-8">
-                                <input type="text" id="codigo" name="codigo" class="form-control" value="<?=Helper::sanitize($tipo->codigo);?>">
+                                <input type="text" id="mascara" name="mascara" class="form-control" value="<?=Helper::sanitize($tipo->mascara);?>">
                             </div>
                         </div>
                         <!-- Color -->
