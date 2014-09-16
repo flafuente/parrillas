@@ -141,7 +141,7 @@ Toolbar::render();
                             Duración
                         </label>
                         <div class="col-sm-8">
-                            <input type="text" readonly="true" id="duracion" name="duracion" class="form-control" value="<?=Helper::sanitize($entrada->duracion);?>" placeholder="HH:MM:SS:FR">
+                            <input type="text" readonly="true" id="duracion" name="duracion" class="form-control validate" value="<?=Helper::sanitize($entrada->duracion);?>" placeholder="HH:MM:SS:FR">
                         </div>
                     </div>
                     <?php if (!empty($entradas)) { ?>
@@ -225,13 +225,41 @@ Toolbar::render();
             dataType: "json"
         }).done(function (data) {
             field.removeClass("is-autocheck-loading");
-
             //Errors?
             if (data.data.status != "ok") {
                 field.addClass("is-autocheck-faliure");
                 processMessages(data.messages, form)
             } else {
                 field.addClass("is-autocheck-successful");
+            }
+        });
+    });
+
+    //Duración autocomplete
+    $(document).on('input', '.dateMask', function (e) {
+
+        var field = $("#duracion");
+        //Remove previous errors
+        field.addClass("is-autocheck-loading");
+        field.removeClass("is-autocheck-faliure");
+        field.removeClass("is-autocheck-successful");
+
+        //Ajax
+        $.ajax({
+            type: "POST",
+            url: "<?=Url::site('entradas/ajaxTcDiff')?>",
+            data: {
+                "tcIn": $("#tcIn").val(),
+                "tcOut": $("#tcOut").val()
+            },
+            dataType: "json"
+        }).done(function (data) {
+            field.removeClass("is-autocheck-loading");
+            //Errors?
+            if (data.data.status != "ok") {
+                field.addClass("is-autocheck-faliure");
+            } else {
+                field.val(data.data.diff);
             }
         });
     });

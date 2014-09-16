@@ -3,6 +3,9 @@
 		"classmap": [
 			"classes/",
 			"libs/"
+		],
+		"files": [
+			"libs/functions.php"
 		]
 	},
 	"require": {

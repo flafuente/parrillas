@@ -73,11 +73,24 @@ class entradasController extends Controller
 
     public function ajaxCheckHouseNumber()
     {
-        if (Entrada::checkHouseNumber($_REQUEST["houseNumber"], $_REQUEST["tipoId"])) {
+        if (Entrada::validateHouseNumber($_REQUEST["houseNumber"], $_REQUEST["tipoId"])) {
             $data["status"] = "ok";
         } else {
             $data["status"] = "error";
         }
+        $this->ajax($data);
+    }
+
+    public function ajaxTcDiff()
+    {
+        $diff = timeDiff($_REQUEST["tcIn"], $_REQUEST["tcOut"]);
+        if ($diff) {
+            $data["status"] = "ok";
+            $data["diff"] = $diff;
+        } else {
+            $data["status"] = "error";
+        }
+
         $this->ajax($data);
     }
 }

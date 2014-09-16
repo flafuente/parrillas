@@ -115,7 +115,22 @@ class Entrada extends Model
             Registry::addMessage("Este nombre ya está siendo utilizado", "error", "nombre");
         }
         //Check houseNumber
-        Self::checkHouseNumber($this->houseNumber, $this->tipoId);
+        Self::validateHouseNumber($this->houseNumber, $this->tipoId);
+
+        //TC IN/OUT
+        Self::validateTc($this->tcIn, "tcIn");
+        Self::validateTc($this->tcOut, "tcOut");
+
+        //Return messages avoiding deletion
+        return Registry::getMessages(true);
+    }
+
+    private static function validateTc($tc, $field)
+    {
+        $parts = explode(":", $tc);
+        if (count($parts) != 4) {
+            Registry::addMessage("El formato de TC es XX:XX:XX:XX", "error", $field);
+        }
 
         //Return messages avoiding deletion
         return Registry::getMessages(true);
@@ -143,6 +158,8 @@ class Entrada extends Model
         $this->dateInsert = date("Y-m-d H:i:s");
         //Clear ED & FIN
         $this->clearEdFin();
+        //Calc duración
+        $this->calcDuracion();
     }
 
     /**
@@ -167,6 +184,8 @@ class Entrada extends Model
         $this->dateUpdate = date("Y-m-d H:i:s");
         //Clear ED & FIN
         $this->clearEdFin();
+        //Calc duración
+        $this->calcDuracion();
     }
 
     private function clearEdFin()
@@ -178,7 +197,14 @@ class Entrada extends Model
         }
     }
 
-    public static function checkHouseNumber($houseNumber, $tipoId)
+    private function calcDuracion()
+    {
+        $this->duracion = timeDiff($this->tcIn, $this->tcOut);
+
+        return $this->duracion;
+    }
+
+    public static function validateHouseNumber($houseNumber, $tipoId)
     {
         $tipo = new Tipo($tipoId);
         if (!$tipo->id) {
