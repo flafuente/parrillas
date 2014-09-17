@@ -28,6 +28,12 @@
                         </a>
                     </li>
                 <?php } else { ?>
+                    <li class="<?=$active['parrilla']['index']?>">
+                        <a href="<?=Url::site("parrilla")?>">
+                            <span class="glyphicon glyphicon-star"></span>
+                            Parrilla
+                        </a>
+                    </li>
                     <li class="<?=$active['entradas']['index']?>">
                         <a href="<?=Url::site("entradas")?>">
                             <span class="glyphicon glyphicon-star"></span>

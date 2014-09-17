@@ -9,7 +9,7 @@ ini_set("session.gc_maxlifetime","140000");
 $_config['title'] = "Tribo.tv";
 $_config['defaultLang'] = "en_GB";
 $_config['template'] = "bootstrap";
-$_config['defaultApp'] = "entradas";
+$_config['defaultApp'] = "parrilla";
 $_config['defaultLimit'] = 10;
 $_config['debug'] = true;
 $_config['cookie'] = "authtriboparrillas";
