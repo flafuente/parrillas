@@ -28,7 +28,8 @@ class entradasController extends Controller
     {
         $url = Registry::getUrl();
         $this->setData("entrada", new Entrada($url->vars[0]));
-        $this->setData("moscas", Mosca::select());
+        $this->setData("moscas1", Mosca::select(array("tipoId" => 1)));
+        $this->setData("moscas2", Mosca::select(array("tipoId" => 2)));
         $this->setData("tipos", Tipo::select());
         $this->setData("entradas", Entrada::select());
         $html = $this->view("views.edit");

@@ -106,14 +106,25 @@ Toolbar::render();
                             <input type="checkbox" class="switch" name="segmento" id="segmento" value="1" <?php if($entrada->segmento) echo "checked";?>>
                         </div>
                     </div>
-                    <?php if (!empty($moscas)) { ?>
+                    <?php if (!empty($moscas1)) { ?>
                         <!-- Mosca -->
                         <div class="form-group">
                             <label class="col-sm-3 control-label">
                                 Mosca
                             </label>
                             <div class="col-sm-8">
-                                <?=HTML::select("moscaId", $moscas, $entrada->moscaId, array("id" => "moscaId", "class" => "select2"), null, array("display" => "nombre")); ?>
+                                <?=HTML::select("moscaId", $moscas1, $entrada->moscaId, array("id" => "moscaId", "class" => "select2"), null, array("display" => "nombre")); ?>
+                            </div>
+                        </div>
+                    <?php } ?>
+                    <?php if (!empty($moscas2)) { ?>
+                        <!-- Mosca2 -->
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">
+                                Mosca 2
+                            </label>
+                            <div class="col-sm-8">
+                                <?=HTML::select("moscaId2", $moscas2, $entrada->moscaId, array("id" => "moscaId", "class" => "select2"), null, array("display" => "nombre")); ?>
                             </div>
                         </div>
                     <?php } ?>

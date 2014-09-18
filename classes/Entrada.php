@@ -45,6 +45,12 @@ class Entrada extends Model
     public $moscaId;
 
     /**
+     * Id de la mosca 2
+     * @var int
+     */
+    public $moscaId2;
+
+    /**
      * TC IN
      * @example HH:MM:SS:FR
      * @var string

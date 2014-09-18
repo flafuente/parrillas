@@ -57,6 +57,15 @@ Toolbar::render();
                     Tipo de entrada
                 </div>
                 <div class="panel-body">
+                    <!-- Tipo -->
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">
+                            Tipo
+                        </label>
+                        <div class="col-sm-8">
+                            <?=Html::select("tipoId", $mosca->tipos, $mosca->tipoId)?>
+                        </div>
+                    </div>
                     <!-- Código -->
                     <div class="form-group">
                         <label class="col-sm-3 control-label">

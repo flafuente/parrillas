@@ -14,6 +14,12 @@ class Mosca extends Model
     public $id;
 
     /**
+     * Tipo Id
+     * @var int
+     */
+    public $tipoId;
+
+    /**
      * Nombre
      * @var string
      */
@@ -37,6 +43,18 @@ class Mosca extends Model
      */
     public $dateUpdate;
 
+    public $tipos = array(
+        1 => "Tipo 1",
+        2 => "Tipo 2",
+    );
+
+    /**
+     * Reserved vars (not at database table)
+     *
+     * @var array
+     */
+    public static $reservedVarsChild = array("tipos");
+
     /**
      * Class initialization
      *
@@ -46,6 +64,11 @@ class Mosca extends Model
     {
         parent::$dbTable = "moscas";
         parent::$reservedVarsChild = self::$reservedVarsChild;
+    }
+
+    public function getTipoString()
+    {
+        return $this->tipos[$this->tipoId];
     }
 
     /**
@@ -129,16 +152,27 @@ class Mosca extends Model
     public static function select($data=array(), $limit=0, $limitStart=0, &$total=null)
     {
         $db = Registry::getDb();
+
         //Query
         $query = "SELECT * FROM `moscas` ";
         $params = array();
+
         //Where
         $where = " WHERE 1=1 ";
+
+        //TipoId
+        if ($data["tipoId"]) {
+            $where .= " AND tipoId = :tipoId ";
+            $params[":tipoId"] = $data["tipoId"];
+        }
+
         $query .= $where;
+
         //Total
         $totalQuery = "SELECT * FROM `moscas` ".$where;
         $total = count($db->Query($totalQuery, $params));
         if ($total) {
+
             //Order
             if ($data['order'] && $data['orderDir']) {
                 //Secure Field
@@ -147,10 +181,13 @@ class Mosca extends Model
                     $query .= " ORDER BY `".$data['order']."` ".$data['orderDir'];
                 }
             }
+
             //Limit
             if ($limit) {
                 $query .= " LIMIT ".(int) $limitStart.", ".(int) $limit;
             }
+
+            //Query
             $rows = $db->Query($query, $params);
             if (count($rows)) {
                 $results = array();

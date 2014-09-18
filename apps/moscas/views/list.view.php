@@ -28,6 +28,7 @@ Toolbar::render();
                     <thead>
                         <tr>
                             <th><?=Html::sortableLink("id", "Id");?></th>
+                            <th><?=Html::sortableLink("tipoId", "Tipo");?></th>
                             <th><?=Html::sortableLink("codigo", "Código");?></th>
                             <th><?=Html::sortableLink("nombre", "Nombre");?></th>
                             <th><?=Html::sortableLink("dateInsert", "Fecha creación");?></th>
@@ -39,6 +40,7 @@ Toolbar::render();
                         <?php foreach ($results as $mosca) { ?>
                             <tr>
                                 <td><?=$mosca->id;?></a></td>
+                                <td><?=Helper::sanitize($mosca->getTipoString());?></td>
                                 <td><?=Helper::sanitize($mosca->codigo);?></td>
                                 <td><?=Helper::sanitize($mosca->nombre);?></td>
                                 <td><?=Helper::humanDate($mosca->dateInsert);?></td>
