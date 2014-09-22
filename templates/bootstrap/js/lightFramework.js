@@ -1,6 +1,6 @@
 //Sortable Column
 ;(function($){
-	$.fn.sortable = function(){
+	$.fn.sortableLF = function(){
 		var form = $(this).closest("form");
 		$(this).on("click", function() {
 			checkFormField(form, "order", $(this).attr("data-order"));

@@ -39,8 +39,8 @@ Toolbar::render();
                             <tr>
                                 <td><?=$entrada->id;?></a></td>
                                 <td><?=Helper::sanitize($entrada->nombre);?></td>
-                                <td><?=Helper::humanDate($user->dateInsert);?></td>
-                                <td><?=Helper::humanDate($user->dateUpdate);?></td>
+                                <td><?=Helper::humanDate($entrada->dateInsert);?></td>
+                                <td><?=Helper::humanDate($entrada->dateUpdate);?></td>
                                 <td>
                                     <?=HTML::formLink("btn-xs btn-primary", "pencil", Url::site("entradas/edit/".$entrada->id)); ?>
                                     <?=HTML::formLink("btn-xs btn-danger", "remove", Url::site("entradas/delete/".$entrada->id), null, null, "¿Deseas eliminar esta entrada?"); ?>

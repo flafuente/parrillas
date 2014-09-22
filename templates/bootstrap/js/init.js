@@ -31,7 +31,7 @@ $(document).ready(function(){
 	//Lada spinners
 	Ladda.bind('.ladda-button');
 	//Sortable table links
-	$(".sortable").sortable();
+	$(".sortableLF").sortableLF();
 	//Pagination
 	$(".pagination a").pagination();
 	//Change submit

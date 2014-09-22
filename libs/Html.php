@@ -221,7 +221,7 @@ class Html
         }
 
         return
-            "<a href='#' class='sortable' data-order='".Helper::sanitize($sortableField)."' data-orderDir='".Helper::sanitize($orderDir)."'>
+            "<a href='#' class='sortableLF' data-order='".Helper::sanitize($sortableField)."' data-orderDir='".Helper::sanitize($orderDir)."'>
                 ".Helper::sanitize($text)."
                 <span class='glyphicon glyphicon-".Helper::sanitize($cssClass)."'></span>
             </a>";
