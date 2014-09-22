@@ -259,6 +259,11 @@ class Entrada extends Model
             $where .= "AND `nombre` LIKE :search ";
             $params[":search"] = "%".$data["search"]."%";
         }
+        //Tipo
+        if ($data["tipo"]) {
+            $where .= "AND `tipoId` IN (SELECT `id` FROM `tipos` WHERE `codigo` = :tipo) ";
+            $params[":tipo"] = $data["tipo"];
+        }
         $query .= $where;
         //Total
         $totalQuery = "SELECT * FROM `entradas` ".$where;

@@ -31,7 +31,8 @@ class entradasController extends Controller
         $this->setData("moscas1", Mosca::select(array("tipoId" => 1)));
         $this->setData("moscas2", Mosca::select(array("tipoId" => 2)));
         $this->setData("tipos", Tipo::select());
-        $this->setData("entradas", Entrada::select());
+        $this->setData("entradasED", Entrada::select(array("tipo" => "ED")));
+        $this->setData("entradasFIN", Entrada::select(array("tipo" => "FIN")));
         $html = $this->view("views.edit");
         $this->render($html);
     }

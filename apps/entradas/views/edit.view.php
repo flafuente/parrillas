@@ -155,23 +155,25 @@ Toolbar::render();
                             <input type="text" readonly="true" id="duracion" name="duracion" class="form-control validate" value="<?=Helper::sanitize($entrada->duracion);?>" placeholder="HH:MM:SS:FR">
                         </div>
                     </div>
-                    <?php if (!empty($entradas)) { ?>
+                    <?php if (!empty($entradasED)) { ?>
                         <!-- Entrada ED -->
                         <div class="form-group edfin">
                             <label class="col-sm-3 control-label">
                                 ED
                             </label>
                             <div class="col-sm-8">
-                                <?=HTML::select("entradaIdEd", $entradas, $entrada->entradaIdEd, array("id" => "entradaIdEd", "class" => "select2"), null, array("display" => "nombre")); ?>
+                                <?=HTML::select("entradaIdEd", $entradasED, $entrada->entradaIdEd, array("id" => "entradaIdEd", "class" => "select2"), null, array("display" => "nombre")); ?>
                             </div>
                         </div>
+                    <?php } ?>
+                    <?php if (!empty($entradasFIN)) { ?>
                         <!-- Entrada FIN -->
                         <div class="form-group edfin">
                             <label class="col-sm-3 control-label">
                                 FIN
                             </label>
                             <div class="col-sm-8">
-                                <?=HTML::select("entradaIdFin", $entradas, $entrada->entradaIdFin, array("id" => "entradaIdFin", "class" => "select2"), null, array("display" => "nombre")); ?>
+                                <?=HTML::select("entradaIdFin", $entradasFIN, $entrada->entradaIdFin, array("id" => "entradaIdFin", "class" => "select2"), null, array("display" => "nombre")); ?>
                             </div>
                         </div>
                     <?php } ?>
