@@ -6,7 +6,10 @@
             Fecha
         </label>
         <div class="col-sm-3">
-          <input type="text" name="fecha" class="form-control" id="fecha" value="<?=date("d-m-Y");?>" placeholder="Fecha">
+            <input type="text" name="fecha" class="form-control" id="fecha" value="<?=date("d-m-Y");?>" placeholder="Fecha">
+        </div>
+        <div class="col-sm-3">
+            <input type="text" name="entradaId" class="form-control select2entradas">
         </div>
     </div>
 </div>
@@ -56,34 +59,53 @@
 </div>
 
 <script type="text/javascript" language="javascript" class="init">
+    var sum = 0;
+    var table;
+
     $(document).ready(function () {
-        var sum = 0;
-        var table;
-
-        tableInit();
-
-        $(document).keypress(function (e) {
-            if (e.which == 13) {
-                //table.fnClearTable();
-                //Peticion get del tipo accion=new
-                tableInit();
-            }
-        });
-
-        //Delte
-        $(document).on('click', '.delete', function (e) {
-            id = $(this).closest('tr').attr("id");
-            $.ajax('<?=Url::site("parrilla/json");?>?date=' + $("#fecha").val() + '&action=delete&id=' + id);
-            tableInit();
-        });
-
-        //Date change
+        table = tableInit();
         $("#fecha").datepicker({ dateFormat: "dd-mm-yy" });
-        $(document).on('change', '#fecha', function (e) {
-            tableInit();
-        });
-
     });
+
+    //Delte row
+    $(document).on('click', '.delete', function (e) {
+        id = $(this).closest('tr').attr("id");
+        $.ajax('<?=Url::site("parrilla/json");?>?date=' + $("#fecha").val() + '&action=delete&id=' + id);
+        tableInit();
+    });
+
+    //Date change
+    $(document).on('change', '#fecha', function (e) {
+        tableInit();
+    });
+
+    //New row
+    $(document).keypress(function (e) {
+        if (e.which == 13) {
+            //table.fnClearTable();
+            //Peticion get del tipo accion=new
+
+            table.row.add( [
+                    counter +'.1',
+                    counter +'.2',
+                    counter +'.3',
+                    counter +'.4',
+                    counter +'.5'
+                ] ).draw();
+        }
+    });
+
+    //Create row
+    $(document).on('change', '.select2entradas', function (e) {
+        create($(this).val());
+        $(this).select2('data', null);
+    });
+
+    function create(entradaId)
+    {
+        $.ajax('<?=Url::site("parrilla/json");?>?date=' + $("#fecha").val() + '&action=new&entradaId=' + entradaId);
+        tableInit();
+    }
 
     function tableInit()
     {
@@ -107,6 +129,32 @@
                 //console.log("test");
             }
         });
+
+        return table;
     }
+
+    $(".select2entradas").select2({
+        placeholder: "Buscar entrada",
+        minimumInputLength: 1,
+        ajax: {
+            url: "<?=Url::site('parrilla/entradasJs');?>",
+            dataType: 'json',
+            data: function (term) {
+                return {
+                    q: term,
+                };
+            },
+            results: function (data) {
+                return {
+                    results: $.map(data.data.entradas, function (item) {
+                        return {
+                            id: item.id,
+                            text: item.nombre + " (" + item.houseNumber + ")"
+                        }
+                    })
+                };
+            }
+        },
+    });
 
 </script>

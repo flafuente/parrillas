@@ -34,7 +34,8 @@ class parrillaController extends Controller
             //New
             case "new":
                 $evento = new Evento();
-                $evento->insert();
+                $evento->entradaId = $_REQUEST["entradaId"];
+                $evento->insert(array("fecha" => $date));
             break;
             //Delete
             case "delete":
@@ -57,5 +58,11 @@ class parrillaController extends Controller
         echo json_encode(array(
             "aaData" => $data
         ));
+    }
+
+    public function entradasJs()
+    {
+        $entradas = Entrada::select(array("search" => $_REQUEST["q"]), 10);
+        $this->ajax(array("entradas" => $entradas));
     }
 }

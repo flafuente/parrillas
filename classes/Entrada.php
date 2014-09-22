@@ -246,7 +246,7 @@ class Entrada extends Model
      *
      * @return array Objects found
      */
-    public static function select($data=array(), $limit=0, $limitStart=0, &$total=null)
+    public static function select($data = array(), $limit = 0, $limitStart = 0, &$total = null)
     {
         $db = Registry::getDb();
         //Query
@@ -254,6 +254,11 @@ class Entrada extends Model
         $params = array();
         //Where
         $where = " WHERE 1=1 ";
+        //Search
+        if ($data["search"]) {
+            $where .= "AND `nombre` LIKE :search ";
+            $params[":search"] = "%".$data["search"]."%";
+        }
         $query .= $where;
         //Total
         $totalQuery = "SELECT * FROM `entradas` ".$where;
@@ -281,5 +286,22 @@ class Entrada extends Model
                 return $results;
             }
         }
+    }
+
+    public function getJSon()
+    {
+        $tipo = new Tipo($this->tipoId);
+        //$mosca = new Mosca($this->moscaId);
+
+        $object = new stdClass();
+        $object->id = $this->id;
+        $object->nombre = $this->nombre;
+        $object->houseNumber = $this->houseNumber;
+        $object->tcIn = $this->tcIn;
+        $object->tipo = $tipo->nombre;
+        $object->duracion = $this->duracion;
+        $object->segmento = $this->segmento;
+
+        return $object;
     }
 }

@@ -119,13 +119,14 @@ class Evento extends Model
         $user = Registry::getUser();
         $this->userId = $user->id;
         $this->dateInsert = date("Y-m-d H:i:s");
-        $this->fillVars($data["fecha"]);
 
         //Entrada
         $entrada = new Entrada($this->entradaId);
-        $this->duracion = $entrada->duracion;
         $this->tipo = $entrada->tipoId;
         $this->houseNumber = $entrada->houseNumber;
+        $this->titulo = $entrada->nombre;
+        $this->duracion = substr($entrada->duracion, 0, 8);
+        $this->tcIn = $entrada->tcIn;
         $this->segmento = $entrada->segmento;
 
         //Fechas / Orden
@@ -158,7 +159,7 @@ class Evento extends Model
     {
         $previousEvent = Evento::select(array("fecha" => $fecha, "orderNum" => $order, "order" => "order", "orderDir" => "DESC"), 1);
 
-        return $previousEvent;
+        return $previousEvent[0];
     }
 
     public function order($fecha, $toPosition)
@@ -196,7 +197,7 @@ class Evento extends Model
         }
 
         //Actualizamos las fechas
-        $this->actualizarFechas($fecha);
+        self::actualizarFechas($fecha);
     }
 
     public static function actualizarFechas($fecha)
