@@ -72,6 +72,7 @@
 <script type="text/javascript" language="javascript" class="init">
     var sum = 0;
     var table;
+    var date = $("#fecha").val();
 
     $(document).ready(function () {
         table = tableInit();
@@ -81,29 +82,14 @@
     //Delte row
     $(document).on('click', '.delete', function (e) {
         id = $(this).closest('tr').attr("id");
-        $.ajax('<?=Url::site("parrilla/json");?>?date=' + $("#fecha").val() + '&action=delete&id=' + id);
+        $.ajax('<?=Url::site("parrilla/json");?>?date=' + date + '&action=delete&id=' + id);
         tableInit();
     });
 
     //Date change
     $(document).on('change', '#fecha', function (e) {
+        date = $("#fecha").val();
         tableInit();
-    });
-
-    //New row
-    $(document).keypress(function (e) {
-        if (e.which == 13) {
-            //table.fnClearTable();
-            //Peticion get del tipo accion=new
-
-            table.row.add( [
-                    counter +'.1',
-                    counter +'.2',
-                    counter +'.3',
-                    counter +'.4',
-                    counter +'.5'
-                ] ).draw();
-        }
     });
 
     //Create row
@@ -114,13 +100,13 @@
 
     function create(entradaId)
     {
-        $.ajax('<?=Url::site("parrilla/json");?>?date=' + $("#fecha").val() + '&action=new&entradaId=' + entradaId);
+        $.ajax('<?=Url::site("parrilla/json");?>?date=' + date + '&action=new&entradaId=' + entradaId);
         tableInit();
     }
 
     function tableInit()
     {
-        url = '<?=Url::site("parrilla/json");?>?date=' + $("#fecha").val();
+        url = '<?=Url::site("parrilla/json");?>?date=' + date;
         table = $('#example').DataTable({
             "paging":   false,
             "bPaginate": false,
@@ -128,7 +114,7 @@
             "bFilter": false,
             "bServerSide": true,
             "bDestroy": true,
-            "bRetrieve": true,
+            "bRetrieve": false,
             "fnRowCallback": function (nRow, aData, iDisplayIndex) {
                 nRow.setAttribute('id', aData.id);  //Initialize row id for every row
             }
