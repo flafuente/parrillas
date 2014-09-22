@@ -256,8 +256,9 @@ class Entrada extends Model
         $where = " WHERE 1=1 ";
         //Search
         if ($data["search"]) {
-            $where .= "AND `nombre` LIKE :search ";
-            $params[":search"] = "%".$data["search"]."%";
+            $where .= "AND (`nombre` LIKE :nombre OR `houseNumber` LIKE :houseNumber) ";
+            $params[":houseNumber"] = "%".$data["search"]."%";
+            $params[":nombre"] = "%".$data["search"]."%";
         }
         //Tipo
         if ($data["tipo"]) {

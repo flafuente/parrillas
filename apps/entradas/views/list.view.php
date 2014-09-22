@@ -21,6 +21,13 @@ Toolbar::render();
     <form method="post" action="<?=Url::site()?>" id="mainForm" name="mainForm" class="form-inline" role="form">
         <input type="hidden" name="app" id="app" value="entradas">
         <input type="hidden" name="action" id="action" value="">
+        <!-- Filters -->
+        <div class="row filters">
+            <!-- Search -->
+            <div class="col-sm-3 col-xs-6 filter">
+                <?=Html::search();?>
+            </div>
+        </div>
         <!-- Results -->
         <?php if (count($results)) { ?>
             <div class="table-responsive">
@@ -29,6 +36,7 @@ Toolbar::render();
                         <tr>
                             <th><?=Html::sortableLink("id", "Id");?></th>
                             <th><?=Html::sortableLink("nombre", "Nombre");?></th>
+                            <th><?=Html::sortableLink("houseNumber", "House Number");?></th>
                             <th><?=Html::sortableLink("dateInsert", "Fecha creación");?></th>
                             <th><?=Html::sortableLink("dateUpdate", "Fecha actualización");?></th>
                             <th></th>
@@ -39,6 +47,7 @@ Toolbar::render();
                             <tr>
                                 <td><?=$entrada->id;?></a></td>
                                 <td><?=Helper::sanitize($entrada->nombre);?></td>
+                                <td><?=Helper::sanitize($entrada->houseNumber);?></td>
                                 <td><?=Helper::humanDate($entrada->dateInsert);?></td>
                                 <td><?=Helper::humanDate($entrada->dateUpdate);?></td>
                                 <td>

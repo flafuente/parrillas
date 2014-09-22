@@ -196,7 +196,7 @@ class Html
         return '<div class="input-group">
                     <input type="text" class="form-control" name="search" value="'.Helper::sanitize($_REQUEST["search"]).'">
                     <span class="input-group-btn">
-                        <button class="btn btn-default" type="submit">'.Language::translate("GENERAL_SEARCH").'</button>
+                        <button class="btn btn-default" type="submit">Buscar</button>
                     </span>
                 </div>';
     }
