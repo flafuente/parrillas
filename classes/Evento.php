@@ -93,24 +93,6 @@ class Evento extends Model
     }
 
     /**
-     * Validación para creación/edición del capítulo.
-     * @return array Array de errores
-     */
-    private function validate()
-    {
-        return Registry::getMessages(true);
-    }
-
-    /**
-     * Validación de creación.
-     * @return array Errores
-     */
-    public function validateInsert()
-    {
-        return $this->validate();
-    }
-
-    /**
      * Acciones previas a la creación.
      * @return void
      */
@@ -170,6 +152,9 @@ class Evento extends Model
 
         //Actualizamos el orden
         $this->actualizarOrden($fecha, $this->id);
+
+        //Actualizamos las fechas
+        self::actualizarFechas($fecha);
     }
 
     public static function actualizarOrden($fecha, $ignoreId = null)
@@ -195,9 +180,6 @@ class Evento extends Model
                 }
             }
         }
-
-        //Actualizamos las fechas
-        self::actualizarFechas($fecha);
     }
 
     public static function actualizarFechas($fecha)
@@ -221,20 +203,12 @@ class Evento extends Model
                         //Fin
                         $evento->calcFechaFin();
                     }
+                    echo "Actualizando evento nº".$evento->id." (".$evento->order.") -> ".$evento->fechaInicio." | ".$evento->fechaFin."\n";
                     $evento->update();
                     $previousEvent = $evento;
                 }
             }
         }
-    }
-
-    /**
-     * Validación de modificación.
-     * @return array Errores
-     */
-    public function validateUpdate()
-    {
-        return $this->validate();
     }
 
     /**
@@ -300,7 +274,11 @@ class Evento extends Model
 
     public function postDelete()
     {
-        $this->actualizarOrden(date("Y-m-d", strtotime($this->fechaInicio)));
+        $fecha = date("Y-m-d", strtotime($this->fechaInicio));
+        //Actualizamos el orden
+        self::actualizarOrden($fecha);
+        //Actualizamos las fechas
+        self::actualizarFechas($fecha);
     }
 
     public function getFecha()

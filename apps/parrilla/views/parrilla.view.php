@@ -8,9 +8,6 @@
         <div class="col-sm-3">
             <input type="text" name="fecha" class="form-control" id="fecha" value="<?=date("d-m-Y");?>" placeholder="Fecha">
         </div>
-        <div class="col-sm-3">
-            <input type="text" name="entradaId" class="form-control select2entradas">
-        </div>
     </div>
 </div>
 
@@ -55,6 +52,20 @@
 
             </tbody>
         </table>
+
+        <br>
+
+        <form class="form-horizontal" role="form">
+            <label for="entradaId" class="col-sm-2 control-label">
+                Crear entrada
+            </label>
+            <div class="form-group">
+                <div class="col-sm-3">
+                    <input type="text" name="entradaId" class="form-control select2entradas">
+                </div>
+            </div>
+        </div>
+
     </section>
 </div>
 
@@ -134,7 +145,7 @@
     }
 
     $(".select2entradas").select2({
-        placeholder: "Buscar entrada",
+        placeholder: "Crear entrada",
         minimumInputLength: 1,
         ajax: {
             url: "<?=Url::site('parrilla/entradasJs');?>",
