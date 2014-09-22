@@ -293,6 +293,8 @@ class Evento extends Model
 
     public function getDataTablesJson()
     {
+        $tipo = new Tipo($this->tipo);
+
         return array(
             "id" => $this->id,
             $this->order,
@@ -300,7 +302,7 @@ class Evento extends Model
             $this->getHora(),
             $this->duracion,
             $this->houseNumber,
-            $this->tipo,
+            $tipo->nombre,
             $this->titulo,
             $this->tcIn,
             $this->logo,
