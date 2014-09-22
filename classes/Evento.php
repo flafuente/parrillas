@@ -124,7 +124,7 @@ class Evento extends Model
             //Orden
             $this->orden = 1;
             //Inicio
-            $this->fechaInicio = $data["fecha"]." 00:00:00";
+            $this->fechaInicio = $data["fecha"]." 07:00:00";
             //Fin
             $this->calcFechaFin();
         }
@@ -199,7 +199,7 @@ class Evento extends Model
                         $evento->calcFechaFin();
                     } else {
                         //Inicio
-                        $evento->fechaInicio = $fecha." 00:00:00";
+                        $evento->fechaInicio = $fecha." 07:00:00";
                         //Fin
                         $evento->calcFechaFin();
                     }
