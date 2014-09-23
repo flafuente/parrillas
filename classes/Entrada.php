@@ -127,6 +127,12 @@ class Entrada extends Model
         Self::validateTc($this->tcIn, "tcIn");
         Self::validateTc($this->tcOut, "tcOut");
 
+        //Moscas
+        $tipo = new Tipo($this->tipoId);
+        if ($this->moscaId && $this->moscaId2 && $tipo->codigo == "P") {
+            Registry::addMessage("Las entradas de tipo P no pueden tener mosca 2", "error", "moscaId2");
+        }
+
         //Return messages avoiding deletion
         return Registry::getMessages(true);
     }

@@ -113,18 +113,18 @@ Toolbar::render();
                                 Mosca
                             </label>
                             <div class="col-sm-8">
-                                <?=HTML::select("moscaId", $moscas1, $entrada->moscaId, array("id" => "moscaId", "class" => "select2"), null, array("display" => "nombre")); ?>
+                                <?=HTML::select("moscaId", $moscas1, $entrada->moscaId, array("id" => "moscaId", "class" => "select2"), array("id" => 0, "display" => "Ninguna"), array("display" => "nombre")); ?>
                             </div>
                         </div>
                     <?php } ?>
                     <?php if (!empty($moscas2)) { ?>
                         <!-- Mosca2 -->
-                        <div class="form-group">
+                        <div class="form-group mosca2">
                             <label class="col-sm-3 control-label">
                                 Mosca 2
                             </label>
                             <div class="col-sm-8">
-                                <?=HTML::select("moscaId2", $moscas2, $entrada->moscaId, array("id" => "moscaId", "class" => "select2"), null, array("display" => "nombre")); ?>
+                                <?=HTML::select("moscaId2", $moscas2, $entrada->moscaId, array("id" => "moscaId", "class" => "select2"), array("id" => 0, "display" => "Ninguna"), array("display" => "nombre")); ?>
                             </div>
                         </div>
                     <?php } ?>
@@ -202,8 +202,10 @@ Toolbar::render();
             //ED/FIN
             if (tipos[$(this).val()].codigo.toUpperCase() == "P") {
                 $(".edfin").show();
+                $(".mosca2").hide();
             } else {
                 $(".edfin").hide();
+                $(".mosca2").show();
             }
         });
         $("#tipoId").change();
