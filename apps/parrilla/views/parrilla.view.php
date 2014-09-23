@@ -1,6 +1,25 @@
 <?php defined('_EXE') or die('Restricted access'); ?>
 
-<form class="form-horizontal" role="form">
+<?php
+Toolbar::addTitle("Parrilla", "glyphicon-star");
+//Export button
+Toolbar::addButton(
+    array(
+        "title" => "Exportar",
+        "app" => "parrilla",
+        "action" => "export",
+        "class" => "primary",
+        "spanClass" => "share-alt",
+        "noAjax" => true
+    )
+);
+Toolbar::render();
+?>
+
+<form method="post" name="mainForm" id="mainForm" action="<?=Url::site();?>" class="form-horizontal" role="form" autocomplete="off">
+    <input type="hidden" name="app" id="app" value="parrilla">
+    <input type="hidden" name="action" id="action" value="export">
+
     <div class="form-group">
         <label for="fecha" class="col-sm-2 control-label">
             Fecha
@@ -61,10 +80,10 @@
             </label>
             <div class="form-group">
                 <div class="col-sm-3">
-                    <input type="text" name="entradaId" class="form-control select2entradas">
+                    <input type="text" name="entradaId" id="entradaId" class="form-control select2entradas">
                 </div>
             </div>
-        </div>
+        </form>
 
     </section>
 </div>
@@ -73,6 +92,7 @@
     var sum = 0;
     var table;
     var date = $("#fecha").val();
+    var order = 0;
 
     $(document).ready(function () {
         table = tableInit();
@@ -93,16 +113,30 @@
     });
 
     //Create row
-    $(document).on('change', '.select2entradas', function (e) {
+    $(document).on('change', '#entradaId', function (e) {
         create($(this).val());
         $(this).select2('data', null);
     });
 
-    function create(entradaId)
+    //Create row (modal)
+    $(document).on('click', '#modalSave', function (e) {
+        create($("#entradaIdModal").val(), order);
+        $("#entradaIdModal").select2('data', null);
+    });
+
+    function create(entradaId, order)
     {
-        $.ajax('<?=Url::site("parrilla/json");?>?date=' + date + '&action=new&entradaId=' + entradaId);
+        $.ajax('<?=Url::site("parrilla/json");?>?date=' + date + '&action=new&entradaId=' + entradaId + '&order=' + order);
         tableInit();
+        $('#modalEntrada').modal('hide');
     }
+
+    //New row (modal)
+    $(document).on('click', '.newModal', function (e) {
+        $("#entradaIdModal").select2('data', null);
+        $('#modalEntrada').modal('show');
+        order = $(this).attr("data-order");
+    });
 
     function tableInit()
     {
@@ -132,28 +166,57 @@
         return table;
     }
 
-    $(".select2entradas").select2({
-        placeholder: "Crear entrada",
-        minimumInputLength: 1,
-        ajax: {
-            url: "<?=Url::site('parrilla/entradasJs');?>",
-            dataType: 'json',
-            data: function (term) {
-                return {
-                    q: term,
-                };
+    $(document).ready(function () {
+        $(".select2entradas").select2({
+            placeholder: "Crear entrada",
+            minimumInputLength: 1,
+            ajax: {
+                url: "<?=Url::site('parrilla/entradasJs');?>",
+                dataType: 'json',
+                data: function (term) {
+                    return {
+                        q: term,
+                    };
+                },
+                results: function (data) {
+                    return {
+                        results: $.map(data.data.entradas, function (item) {
+                            return {
+                                id: item.id,
+                                text: item.nombre + " (" + item.houseNumber + ")"
+                            }
+                        })
+                    };
+                }
             },
-            results: function (data) {
-                return {
-                    results: $.map(data.data.entradas, function (item) {
-                        return {
-                            id: item.id,
-                            text: item.nombre + " (" + item.houseNumber + ")"
-                        }
-                    })
-                };
-            }
-        },
+        });
     });
-
 </script>
+
+<!-- Modal -->
+<div class="modal fade" id="modalEntrada" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Cerrar</span></button>
+                <h4 class="modal-title" id="myModalLabel">Añadir entrada</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal" role="form">
+                    <label for="entradaId" class="col-sm-3 control-label">
+                        Crear entrada
+                    </label>
+                    <div class="form-group">
+                        <div class="col-sm-8">
+                            <input type="text" name="entradaId" id="entradaIdModal" class="form-control select2entradas">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-primary" id="modalSave">Crear</button>
+            </div>
+        </div>
+    </div>
+</div>

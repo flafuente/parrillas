@@ -18,6 +18,21 @@ class parrillaController extends Controller
         $this->render($html);
     }
 
+    public function export()
+    {
+        $date = date("Y-m-d", strtotime($_REQUEST["fecha"]));
+        $eventos = Evento::select(array("fecha" => $date));
+        $output = "";
+        if (count($eventos)) {
+            foreach ($eventos as $evento) {
+                $output .= $evento->telson()."\n";
+            }
+        }
+        header('Content-Type: text/plain');
+        echo $output;
+        exit;
+    }
+
     public function json()
     {
         $date = date("Y-m-d", strtotime($_REQUEST["date"]));
@@ -35,7 +50,7 @@ class parrillaController extends Controller
             case "new":
                 $evento = new Evento();
                 $evento->entradaId = $_REQUEST["entradaId"];
-                $evento->insert(array("fecha" => $date));
+                $evento->insert(array("fecha" => $date, "order" => $_REQUEST["order"]));
             break;
             //Delete
             case "delete":

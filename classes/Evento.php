@@ -329,8 +329,103 @@ class Evento extends Model
             $this->tcIn,
             $this->logo,
             $this->segmento,
-            "<button class='btn btn-danger delete'><span class='glyphicon glyphicon-remove'></span></a>",
+            "<button class='btn btn-xs newModal btn-success' data-order='".$this->order."'><span class='glyphicon glyphicon-plus'></span></a>".
+            "<button class='btn btn-xs delete btn-danger'><span class='glyphicon glyphicon-remove'></span></a>",
             $tipo->color
         );
+    }
+
+    public function telson()
+    {
+        $entrada = new Entrada($this->entradaId);
+        $tipo = new Tipo($this->tipo);
+        $output =
+            //utc_date
+            str_replace("-", "", $this->getFecha()).
+            //time
+            $this->getHora().
+            //start_type & fixed_time
+            "TF".
+            //duration
+            substr($this->duracion, 1, 11).
+            //update_ignore
+            "X".
+            //video_src
+            "SRV3-2".
+            //transition 1
+            " ".
+            //audio_rate 1
+            " ".
+            //effect_time_ofs 10
+            "          ".
+            //effect_duration 10
+            "          ".
+            //effect_transition 6
+            "      ".
+            //type_material 3
+            str_pad($tipo->codigo, 3, " ", STR_PAD_LEFT).
+            //alt_src 6
+            "      ".
+            //video_intime 11
+            "           ".
+            //video_item 16
+            "                ".
+            //video_dbase_title 16
+            "                ".
+            //comment1
+            "                                ".
+            //barker 1
+            " ".
+            //end_type 3
+            "   ".
+            //spool_number 16
+            $this->houseNumber."  ".
+            //dsk_src 6
+            "      ".
+            //dsk_num 16
+            "                ".
+            //dsk_in_time 10
+            "          ".
+            //dsk_duration 10
+            "          ".
+            //dsk2_src 6
+            "      ".
+            //dsk2_item 16
+            "                ".
+            //dsk2_time_ofs 10
+            "          ".
+            //dsk2_duration 10
+            "          ".
+            //effect_item 16
+            "                ".
+            //logo_src 6
+            "      ".
+            //logo 16
+            "                ".
+            //dsk3_src 6
+            "      ".
+            //dsk3_item 16
+            "                ".
+            //dsk3_time_ofs 10
+            "          ".
+            //dsk3_duration 10
+            "          ".
+            //effect_src 6
+            "      ".
+            //prot_src 8
+            "        ".
+            //prot_item 16
+            "                ".
+            //prot_som 11
+            "           ".
+            //prot_dur 10
+            "          ".
+            //video_src_ts 2
+            "  ".
+            //actual_duration 10
+            "          "
+        ;
+
+        return $output;
     }
 }
