@@ -249,7 +249,7 @@ Toolbar::render();
     });
 
     //Duración autocomplete
-    $(document).on('input', '.dateMask', function (e) {
+    $(document).on('change', '.dateMask', function (e) {
 
         var field = $("#duracion");
         //Remove previous errors
