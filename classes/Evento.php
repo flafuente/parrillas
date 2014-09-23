@@ -328,6 +328,7 @@ class Evento extends Model
             $this->logo,
             $this->segmento,
             "<button class='btn btn-danger delete'><span class='glyphicon glyphicon-remove'></span></a>",
+            $tipo->color
         );
     }
 }

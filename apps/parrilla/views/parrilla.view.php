@@ -117,6 +117,8 @@
             "bRetrieve": false,
             "fnRowCallback": function (nRow, aData, iDisplayIndex) {
                 nRow.setAttribute('id', aData.id);  //Initialize row id for every row
+                nRow.setAttribute('style',"background-color:"+aData[11]+";"); //Add color
+
             }
         });
         table.rowReordering({
