@@ -115,7 +115,7 @@ class Evento extends Model
         $this->tipo = $entrada->tipoId;
         $this->houseNumber = $entrada->houseNumber;
         $this->titulo = $entrada->nombre;
-        $this->duracion = substr($entrada->duracion, 0, 8);
+        $this->duracion = $entrada->duracion;
         $this->tcIn = $entrada->tcIn;
         $this->segmento = $entrada->segmento;
 
@@ -132,7 +132,7 @@ class Evento extends Model
             //Orden
             $this->order = 1;
             //Inicio
-            $this->fechaInicio = $data["fecha"]." 07:00:00";
+            $this->fechaInicio = $data["fecha"]." 07:00:00:00";
             //Fin
             $this->calcFechaFin();
         }
@@ -153,8 +153,10 @@ class Evento extends Model
 
     private function calcFechaFin()
     {
-        $seconds = strtotime("1970-01-01 ".$this->duracion." UTC");
-        $this->fechaFin = date("Y-m-d H:i:s", strtotime($this->fechaInicio) + $seconds);
+        //$seconds = strtotime("1970-01-01 ".$this->duracion." UTC");
+        //$this->fechaFin = date("Y-m-d H:i:s", strtotime($this->fechaInicio) + $seconds);
+
+        $this->fechaFin = dateAddTime($this->fechaInicio, $this->duracion);
     }
 
     private static function getPreviousEvent($fecha, $order = null)
@@ -219,7 +221,7 @@ class Evento extends Model
                         $evento->calcFechaFin();
                     } else {
                         //Inicio
-                        $evento->fechaInicio = $fecha." 07:00:00";
+                        $evento->fechaInicio = $fecha." 07:00:00:00";
                         //Fin
                         $evento->calcFechaFin();
                     }
@@ -257,8 +259,8 @@ class Evento extends Model
         //Where
         if (isset($data["fecha"])) {
             $query .= " AND `fechaInicio` >= :fechaInicio AND `fechaFin` <= :fechaFin ";
-            $params[":fechaInicio"] = $data["fecha"]." 00:00:00";
-            $params[":fechaFin"] = $data["fecha"]." 23:59:59";
+            $params[":fechaInicio"] = $data["fecha"]." 00:00:00:00";
+            $params[":fechaFin"] = $data["fecha"]." 23:59:59:24";
         }
         if ($data["orderNum"]) {
             $query .= " AND `order` = :orderNum ";
@@ -303,12 +305,12 @@ class Evento extends Model
 
     public function getFecha()
     {
-        return date("d/m/Y", strtotime($this->fechaInicio));
+        return current(explode(" ", $this->fechaInicio));
     }
 
     public function getHora()
     {
-        return date("H:i:s", strtotime($this->fechaInicio));
+        return end(explode(" ", $this->fechaInicio));
     }
 
     public function getDataTablesJson()
