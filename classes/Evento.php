@@ -302,7 +302,7 @@ class Evento extends Model
             $this->getHora(),
             $this->duracion,
             $this->houseNumber,
-            $tipo->nombre,
+            $tipo->codigo,
             $this->titulo,
             $this->tcIn,
             $this->logo,
