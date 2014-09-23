@@ -104,6 +104,14 @@ class Evento extends Model
 
         //Entrada
         $entrada = new Entrada($this->entradaId);
+
+        //Tiene ED?
+        if ($entrada->entradaIdEd) {
+            $evento = new Evento();
+            $evento->insert(array("fecha" => $data["fecha"], "entradaId" => $entrada->entradaIdEd));
+        }
+
+        //Datos entrada
         $this->tipo = $entrada->tipoId;
         $this->houseNumber = $entrada->houseNumber;
         $this->titulo = $entrada->nombre;
@@ -122,13 +130,25 @@ class Evento extends Model
             $this->calcFechaFin();
         } else {
             //Orden
-            $this->orden = 1;
+            $this->order = 1;
             //Inicio
             $this->fechaInicio = $data["fecha"]." 07:00:00";
             //Fin
             $this->calcFechaFin();
         }
 
+    }
+
+    public function postInsert($data = array())
+    {
+        //Entrada
+        $entrada = new Entrada($this->entradaId);
+
+        //Tiene FIN?
+        if ($entrada->entradaIdFin) {
+            $evento = new Evento();
+            $evento->insert(array("fecha" => $data["fecha"], "entradaId" => $entrada->entradaIdFin));
+        }
     }
 
     private function calcFechaFin()
