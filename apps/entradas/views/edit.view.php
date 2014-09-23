@@ -203,6 +203,7 @@ Toolbar::render();
             if (tipos[$(this).val()].codigo.toUpperCase() == "P") {
                 $(".edfin").show();
                 $(".mosca2").hide();
+                $("#segmento").attr("checked", true);
             } else {
                 $(".edfin").hide();
                 $(".mosca2").show();
