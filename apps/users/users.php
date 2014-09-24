@@ -28,7 +28,6 @@ class usersController extends Controller
     {
         $url = Registry::getUrl();
         $this->setData("user", new User($url->vars[0]));
-        $this->setData("categorias", Categoria::select());
         $html = $this->view("views.edit");
         $this->render($html);
     }

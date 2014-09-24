@@ -52,6 +52,12 @@
                             Moscas
                         </a>
                     </li>
+                    <li class="<?=$active['users']['index']?>">
+                        <a href="<?=Url::site("users")?>">
+                            <span class="glyphicon glyphicon-user"></span>
+                            Usuarios
+                        </a>
+                    </li>
                 <?php } ?>
             </ul>
             <?php if ($user->id) { ?>
