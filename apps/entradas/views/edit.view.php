@@ -119,7 +119,7 @@ Toolbar::render();
                     <?php } ?>
                     <?php if (!empty($moscas2)) { ?>
                         <!-- Mosca2 -->
-                        <div class="form-group mosca2">
+                        <div class="form-group">
                             <label class="col-sm-3 control-label">
                                 Mosca 2
                             </label>
@@ -202,11 +202,12 @@ Toolbar::render();
             //ED/FIN
             if (tipos[$(this).val()].codigo.toUpperCase() == "P") {
                 $(".edfin").show();
-                $(".mosca2").hide();
                 $("#segmento").attr("checked", true);
+                $("#segmento").bootstrapSwitch('state', true);
             } else {
                 $(".edfin").hide();
-                $(".mosca2").show();
+                $("#segmento").removeAttr("checked");
+                $("#segmento").bootstrapSwitch('state', false);
             }
         });
         $("#tipoId").change();
