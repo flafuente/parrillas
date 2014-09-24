@@ -121,7 +121,7 @@ class Entrada extends Model
             Registry::addMessage("Este nombre ya está siendo utilizado", "error", "nombre");
         }
         //Check houseNumber
-        Self::validateHouseNumber($this->houseNumber, $this->tipoId);
+        Self::validateHouseNumber($this->houseNumber, $this->tipoId, $this->id);
 
         //TC IN/OUT
         Self::validateTc($this->tcIn, "tcIn");
@@ -216,7 +216,7 @@ class Entrada extends Model
         return $this->duracion;
     }
 
-    public static function validateHouseNumber($houseNumber, $tipoId)
+    public static function validateHouseNumber($houseNumber, $tipoId, $ignoreId = null)
     {
         $tipo = new Tipo($tipoId);
         if (!$tipo->id) {
@@ -227,7 +227,7 @@ class Entrada extends Model
                 Registry::addMessage("La numeración debe tener 14 caracteres", "error", "houseNumber");
             } else {
                 /// No puede haber 2 iguales
-                if (Self::getBy("houseNumber", $houseNumber)) {
+                if (Self::getBy("houseNumber", $houseNumber, $ignoreId)) {
                     Registry::addMessage("Ya existe otra entrada con esta numeración", "error", "houseNumber");
                 } else {
                     // Máscara
