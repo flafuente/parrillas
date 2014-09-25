@@ -98,6 +98,7 @@ class Evento extends Model
      */
     public function preInsert($data = array())
     {
+
         $user = Registry::getUser();
         $this->userId = $user->id;
         $this->dateInsert = date("Y-m-d H:i:s");
@@ -105,10 +106,27 @@ class Evento extends Model
         //Entrada
         $entrada = new Entrada($this->entradaId);
 
+        //Order forced?
+        if ($data["order"]) {
+            $this->order = $data["order"];
+        }
+
         //Tiene ED?
         if ($entrada->entradaIdEd) {
             $evento = new Evento();
-            $evento->insert(array("fecha" => $data["fecha"], "entradaId" => $entrada->entradaIdEd));
+            $evento->insert(array("fecha" => $data["fecha"], "entradaId" => $entrada->entradaIdEd, "order" => $data["order"]));
+            //Avanzamos una posición
+            if ($data["order"]) {
+                $this->order++;
+            }
+        }
+
+        //Movemos los posteriores
+        if ($data["order"]) {
+            $replaceEvent = self::getPreviousEvent($data["fecha"], $this->order);
+            if ($replaceEvent->id) {
+                self::moveElements($data["fecha"], $this->order, 1);
+            }
         }
 
         //Datos entrada
@@ -120,10 +138,15 @@ class Evento extends Model
         $this->segmento = $entrada->segmento;
 
         //Fechas / Orden
-        $previousEvent = self::getPreviousEvent($data["fecha"]);
+        //Si se ha mandado un orden, buscamos el evento anterior
+        $order = $this->order ? ($this->order - 1) : null;
+        $previousEvent = self::getPreviousEvent($data["fecha"], $order);
+        //Existe un evento anterior?
         if ($previousEvent->id) {
-            //Orden
-            $this->order = $previousEvent->order + 1;
+            //Si no hemos mandado orden, le asignamos el siguiente al evento anterior
+            if (!$this->order) {
+                $this->order = $previousEvent->order + 1;
+            }
             //Inicio
             $this->fechaInicio = $previousEvent->fechaFin;
             //Fin
@@ -137,6 +160,10 @@ class Evento extends Model
             $this->calcFechaFin();
         }
 
+        if ($data["order"]) {
+            self::actualizarFechas($data["fecha"]);
+        };
+
     }
 
     public function postInsert($data = array())
@@ -147,15 +174,13 @@ class Evento extends Model
         //Tiene FIN?
         if ($entrada->entradaIdFin) {
             $evento = new Evento();
-            $evento->insert(array("fecha" => $data["fecha"], "entradaId" => $entrada->entradaIdFin));
+            $order = $this->order + 1;
+            $evento->insert(array("fecha" => $data["fecha"], "entradaId" => $entrada->entradaIdFin, "order" => $order));
         }
     }
 
     private function calcFechaFin()
     {
-        //$seconds = strtotime("1970-01-01 ".$this->duracion." UTC");
-        //$this->fechaFin = date("Y-m-d H:i:s", strtotime($this->fechaInicio) + $seconds);
-
         $this->fechaFin = dateAddTime($this->fechaInicio, $this->duracion);
     }
 
@@ -164,6 +189,22 @@ class Evento extends Model
         $previousEvent = Evento::select(array("fecha" => $fecha, "orderNum" => $order, "order" => "order", "orderDir" => "DESC"), 1);
 
         return $previousEvent[0];
+    }
+
+    private static function moveElements($fecha, $order, $movements)
+    {
+        //Actualizamos el orden
+        $eventos = Evento::select(array("fecha" => $fecha, "minOrderNum" => $order, "order" => "order", "orderDir" => "ASC"));
+        if (count($eventos)) {
+            //Recorremos los eventos
+            foreach ($eventos as $evento) {
+                $pos = $evento->order + $movements;
+                //echo "Actualizando evento nº".$evento->id." (".$evento->order.") a la pos ".$pos."\n";
+                //Movemos el evento de posición
+                $evento->order = $pos;
+                $evento->update();
+            }
+        }
     }
 
     public function order($fecha, $toPosition)
@@ -265,6 +306,10 @@ class Evento extends Model
         if ($data["orderNum"]) {
             $query .= " AND `order` = :orderNum ";
             $params[":orderNum"] = $data["orderNum"];
+        }
+        if ($data["minOrderNum"]) {
+            $query .= " AND `order` >= :minOrderNum ";
+            $params[":minOrderNum"] = $data["minOrderNum"];
         }
         //Total
         $total = count($db->Query($query, $params));

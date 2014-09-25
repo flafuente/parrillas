@@ -92,7 +92,7 @@ Toolbar::render();
     var sum = 0;
     var table;
     var date = $("#fecha").val();
-    var order = 0;
+    var order = 1;
 
     $(document).ready(function () {
         table = tableInit();
@@ -124,9 +124,9 @@ Toolbar::render();
         $("#entradaIdModal").select2('data', null);
     });
 
-    function create(entradaId, order)
+    function create(entradaId, orden)
     {
-        $.ajax('<?=Url::site("parrilla/json");?>?date=' + date + '&action=new&entradaId=' + entradaId + '&order=' + order);
+        $.ajax('<?=Url::site("parrilla/json");?>?date=' + date + '&action=new&entradaId=' + entradaId + '&order=' + orden);
         tableInit();
         $('#modalEntrada').modal('hide');
     }

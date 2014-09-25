@@ -37,6 +37,9 @@ class parrillaController extends Controller
     {
         $date = date("Y-m-d", strtotime($_REQUEST["date"]));
         $action = $_REQUEST["action"];
+        if (is_numeric($_REQUEST["order"]) && (int) $_REQUEST["order"] > 0) {
+            $orden = (int) $_REQUEST["order"];
+        }
         if ($_REQUEST["toPosition"] && $_REQUEST["fromPosition"]) {
             $action = "order";
         }
@@ -50,7 +53,7 @@ class parrillaController extends Controller
             case "new":
                 $evento = new Evento();
                 $evento->entradaId = $_REQUEST["entradaId"];
-                $evento->insert(array("fecha" => $date, "order" => $_REQUEST["order"]));
+                $evento->insert(array("fecha" => $date, "order" => $orden));
             break;
             //Delete
             case "delete":
