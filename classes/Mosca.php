@@ -32,6 +32,12 @@ class Mosca extends Model
     public $codigo;
 
     /**
+     * Identificador
+     * @var string
+     */
+    public $identificador;
+
+    /**
      * Insert date
      * @var string
      */

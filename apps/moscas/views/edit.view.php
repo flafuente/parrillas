@@ -75,6 +75,15 @@ Toolbar::render();
                             <input type="text" id="codigo" name="codigo" class="form-control" value="<?=Helper::sanitize($mosca->codigo);?>">
                         </div>
                     </div>
+                    <!-- Identificador -->
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">
+                            Identificador
+                        </label>
+                        <div class="col-sm-8">
+                            <input type="text" id="identificador" name="identificador" class="form-control" value="<?=Helper::sanitize($mosca->identificador);?>">
+                        </div>
+                    </div>
                     <!-- Nombre -->
                     <div class="form-group">
                         <label class="col-sm-3 control-label">
