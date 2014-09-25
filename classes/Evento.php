@@ -383,6 +383,8 @@ class Evento extends Model
     public function telson()
     {
         $entrada = new Entrada($this->entradaId);
+        $mosca = new Mosca($entrada->moscaId);
+        $mosca2 = new Mosca($entrada->moscaId2);
         $tipo = new Tipo($this->tipo);
         $output =
             //utc_date
@@ -396,7 +398,7 @@ class Evento extends Model
             //update_ignore
             "X".
             //video_src
-            "SRV3-2".
+            "CP2-10".
             //transition 1
             " ".
             //audio_rate 1
@@ -412,23 +414,23 @@ class Evento extends Model
             //alt_src 6
             "      ".
             //video_intime 11
-            "           ".
+            str_pad($entrada->tcIn, 11, " ", STR_PAD_LEFT).
             //video_item 16
-            "                ".
+            str_pad($this->houseNumber, 16, " ", STR_PAD_LEFT).
             //video_dbase_title 16
-            "                ".
+            str_pad(substr($this->titulo, 0 , 16), 16, " ", STR_PAD_LEFT).
             //comment1
-            "                                ".
+            str_pad(substr($this->titulo, 0 , 32), 32, " ", STR_PAD_LEFT).
             //barker 1
             " ".
             //end_type 3
             "   ".
             //spool_number 16
-            $this->houseNumber."  ".
-            //dsk_src 6
-            "      ".
-            //dsk_num 16
             "                ".
+            //dsk_src 6
+            str_pad($mosca2->codigo, 6, " ", STR_PAD_LEFT).
+            //dsk_num 16
+            str_pad($mosca2->identificador, 16, " ", STR_PAD_LEFT).
             //dsk_in_time 10
             "          ".
             //dsk_duration 10
@@ -444,9 +446,9 @@ class Evento extends Model
             //effect_item 16
             "                ".
             //logo_src 6
-            "      ".
+            str_pad($mosca->codigo, 6, " ", STR_PAD_LEFT).
             //logo 16
-            "                ".
+            str_pad($mosca->identificador, 16, " ", STR_PAD_LEFT).
             //dsk3_src 6
             "      ".
             //dsk3_item 16
