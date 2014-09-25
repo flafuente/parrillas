@@ -130,12 +130,14 @@ class Evento extends Model
         }
 
         //Datos entrada
+        $mosca = new Mosca($entrada->moscaId);
         $this->tipo = $entrada->tipoId;
         $this->houseNumber = $entrada->houseNumber;
         $this->titulo = $entrada->nombre;
         $this->duracion = $entrada->duracion;
         $this->tcIn = $entrada->tcIn;
         $this->segmento = $entrada->segmento;
+        $this->logo = $mosca->codigo;
 
         //Fechas / Orden
         //Si se ha mandado un orden, buscamos el evento anterior
