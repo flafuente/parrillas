@@ -393,6 +393,14 @@ class Evento extends Model
             $tf = "  ";
         }
 
+        if ($tipo->codigo == "P") {
+            $type_material = "S";
+        } elseif ($tipo->codigo == "C") {
+            $type_material = "C";
+        } else {
+            $type_material = "I";
+        }
+
         $output =
             //utc_date
             str_replace("-", "", $this->getFecha()).
@@ -417,7 +425,7 @@ class Evento extends Model
             //effect_transition 6
             "      ".
             //type_material 3
-            str_pad($tipo->codigo, 3, " ", STR_PAD_LEFT).
+            str_pad($type_material, 3, " ", STR_PAD_LEFT).
             //alt_src 6
             "      ".
             //video_intime 11
