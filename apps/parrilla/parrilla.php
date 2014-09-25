@@ -24,8 +24,8 @@ class parrillaController extends Controller
         $eventos = Evento::select(array("fecha" => $date));
         $output = "";
         if (count($eventos)) {
-            foreach ($eventos as $evento) {
-                $output .= $evento->telson()."\n";
+            foreach ($eventos as $i => $evento) {
+                $output .= $evento->telson(($i == 0))."\n";
             }
         }
         header('Content-Type: text/plain');

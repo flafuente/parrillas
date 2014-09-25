@@ -380,19 +380,26 @@ class Evento extends Model
         );
     }
 
-    public function telson()
+    public function telson($firstLine = false)
     {
         $entrada = new Entrada($this->entradaId);
         $mosca = new Mosca($entrada->moscaId);
         $mosca2 = new Mosca($entrada->moscaId2);
         $tipo = new Tipo($this->tipo);
+
+        if ($firstLine) {
+            $tf = "TF";
+        } else {
+            $tf = "  ";
+        }
+
         $output =
             //utc_date
             str_replace("-", "", $this->getFecha()).
             //time
             $this->getHora().
             //start_type & fixed_time
-            "TF".
+            $tf.
             //duration
             substr($this->duracion, 1, 11).
             //update_ignore
