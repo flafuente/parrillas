@@ -27,36 +27,6 @@ class Evento extends Model
      */
     public $entradaId;
     /**
-     * House Number
-     * @var int
-     */
-    public $houseNumber;
-    /**
-     * Tipo
-     * @var string
-     */
-    public $tipo;
-    /**
-     * Título
-     * @var string
-     */
-    public $titulo;
-    /**
-     * TC IN
-     * @var string
-     */
-    public $tcIn;
-    /**
-     * Logo
-     * @var string
-     */
-    public $logo;
-    /**
-     * Segmento
-     * @var string
-     */
-    public $segmento;
-    /**
      * Fecha de inicio (Y-m-d H:i:s)
      * @var string
      */
@@ -178,6 +148,7 @@ class Evento extends Model
             $this->tcIn = $entrada->tcIn;
             $this->segmento = $entrada->segmento;
             $this->update();
+            self::actualizarFechas($entrada->getFecha());
         }
     }
 
@@ -204,7 +175,7 @@ class Evento extends Model
 
     private function calcFechaFin()
     {
-        $this->fechaFin = dateAddTime($this->fechaInicio, $this->duracion);
+        $this->fechaFin = dateAddTime($this->fechaInicio, timeDiff("00:00:00:01", $this->duracion));
     }
 
     private static function getPreviousEvent($fecha, $order = null)
