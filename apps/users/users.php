@@ -38,12 +38,12 @@ class usersController extends Controller
         if ($user->id) {
             $res = $user->update($_REQUEST);
             if ($res) {
-                Registry::addMessage("Usuario actualizado satisfactoriamente", "success", "", Url::site("admin/users"));
+                Registry::addMessage("Usuario actualizado satisfactoriamente", "success", "", Url::site("users"));
             }
         } else {
             $res = $user->insert($_REQUEST);
             if ($res) {
-                Registry::addMessage("Usuario creado satisfactoriamente", "success", "", Url::site("admin/users"));
+                Registry::addMessage("Usuario creado satisfactoriamente", "success", "", Url::site("users"));
             }
         }
         $this->ajax();
@@ -59,6 +59,6 @@ class usersController extends Controller
                 Registry::addMessage("Usuario eliminado satisfactoriamente", "success");
             }
         }
-        Url::redirect(Url::site("admin/users"));
+        Url::redirect(Url::site("users"));
     }
 }
