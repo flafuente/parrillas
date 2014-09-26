@@ -31,7 +31,7 @@ function timeDiff($start, $end, $op = "-")
             //Negative carrier
             } elseif ($diff < 0) {
                 $carrier = -1;
-                $diff = abs($diff);
+                $diff = $base - abs($diff);
             } else {
                 $carrier = 0;
             }

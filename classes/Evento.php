@@ -27,6 +27,36 @@ class Evento extends Model
      */
     public $entradaId;
     /**
+     * House Number
+     * @var int
+     */
+    public $houseNumber;
+    /**
+     * Tipo
+     * @var string
+     */
+    public $tipo;
+    /**
+     * Título
+     * @var string
+     */
+    public $titulo;
+    /**
+     * TC IN
+     * @var string
+     */
+    public $tcIn;
+    /**
+     * Logo
+     * @var string
+     */
+    public $logo;
+    /**
+     * Segmento
+     * @var string
+     */
+    public $segmento;
+    /**
      * Fecha de inicio (Y-m-d H:i:s)
      * @var string
      */
@@ -260,7 +290,11 @@ class Evento extends Model
                         //Fin
                         $evento->calcFechaFin();
                     }
-                    echo "Actualizando evento nº".$evento->id." (".$evento->order.") -> ".$evento->fechaInicio." | ".$evento->fechaFin."\n";
+                    echo "Actualizando evento ".$evento->id."<br>";
+                    echo " - Order: ".$evento->order."<br>";
+                    echo " - Duracion: ".$evento->duracion."<br>";
+                    echo " - Inicio: ".$evento->fechaInicio."<br>";
+                    echo " - Fin: ".$evento->fechaFin."<br><br>";
                     $evento->update();
                     $previousEvent = $evento;
                 }
