@@ -178,7 +178,7 @@ class Evento extends Model
             $this->tcIn = $entrada->tcIn;
             $this->segmento = $entrada->segmento;
             $this->update();
-            self::actualizarFechas($entrada->getFecha());
+            self::actualizarFechas($this->getFecha());
         }
     }
 

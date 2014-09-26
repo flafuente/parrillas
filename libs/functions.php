@@ -12,7 +12,7 @@ function timeDiff($start, $end, $op = "-")
         $carrier = 0;
         for ($i = $spaces; $i >= 0; $i--) {
 
-            if ($i == 0) {
+            if ($i == 3) {
                 $base = 25;
             } else {
                 $base = 60;
@@ -25,7 +25,7 @@ function timeDiff($start, $end, $op = "-")
             }
 
             //Positive carrier (impossible on a diff)
-            if ($diff >= $base) {
+            if ($diff > $base) {
                 $carrier = 1;
                 $diff = $diff - $base;
             //Negative carrier
@@ -42,24 +42,6 @@ function timeDiff($start, $end, $op = "-")
         return implode(":", array_reverse($total));
     }
 }
-
-/*function dateDiff($start, $end)
-{
-    if ($end >= $start) {
-        $dateStart = explode(" ", $start);
-        $dateEnd = explode(" ", $end);
-
-        //Fechas distintas
-        if ($dateStart[0] > $dateEnd[0]) {
-            $diff = timeDiff($dateEnd[1], $dateStart[1]);
-            $diff = timeDiff("24:00:00:00", $diff);
-        } else {
-            $diff = timeDiff($dateStart[1], $dateEnd[1]);
-        }
-
-        return $diff;
-    }
-}*/
 
 function dateAddTime($date, $time)
 {

@@ -85,7 +85,7 @@ class entradasController extends Controller
 
     public function ajaxTcDiff()
     {
-        $diff = timeDiff($_REQUEST["tcIn"], $_REQUEST["tcOut"]);
+        $diff = timeDiff($_REQUEST["tcIn"], timeDiff($_REQUEST["tcOut"], "00:00:00:01", "+"));
         if ($diff) {
             $data["status"] = "ok";
             $data["diff"] = $diff;

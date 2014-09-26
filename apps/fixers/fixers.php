@@ -10,6 +10,13 @@ class fixersController extends Controller
 
     public function duracion()
     {
+        //Fix duración entradas
+        $entradas = Entrada::select();
+        foreach ($entradas as $entrada) {
+            $entrada->update();
+        }
+
+        //Eventos
         $fechas = array();
         $eventos = Evento::select();
         foreach ($eventos as $evento) {
@@ -17,7 +24,6 @@ class fixersController extends Controller
                 $fechas[] = $evento->getFecha();
             }
         }
-
         foreach ($fechas as $fecha) {
             echo "<h3>".$fecha."</h3>";
             Evento::actualizarFechas($fecha);
@@ -26,6 +32,6 @@ class fixersController extends Controller
 
     public function testTimeDiff()
     {
-        //echo timeDiff("00:00:00:01", "00:12:01:00");
+        echo timeDiff("00:00:00:01", "00:12:01:00");
     }
 }

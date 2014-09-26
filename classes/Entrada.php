@@ -216,7 +216,7 @@ class Entrada extends Model
 
     private function calcDuracion()
     {
-        $this->duracion = timeDiff($this->tcIn, $this->tcOut);
+        $this->duracion = timeDiff($this->tcIn, timeDiff($this->tcOut, "00:00:00:01", "+"));
 
         return $this->duracion;
     }
