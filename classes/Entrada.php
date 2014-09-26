@@ -194,6 +194,17 @@ class Entrada extends Model
         $this->calcDuracion();
     }
 
+    public function postUpdate()
+    {
+        //Update Eventos
+        $eventos = Evento::getBy("entradaId", $this->id);
+        if (count($eventos)) {
+            foreach ($eventos as $evento) {
+                $evento->updateEntrada($this);
+            }
+        }
+    }
+
     private function clearEdFin()
     {
         $tipo = new Tipo($this->tipoId);

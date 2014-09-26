@@ -145,6 +145,17 @@ class Mosca extends Model
         $this->dateUpdate = date("Y-m-d H:i:s");
     }
 
+    public function postUpdate()
+    {
+        //Update Eventos
+        $eventos = Evento::getByMoscaId($this->id);
+        if (count($eventos)) {
+            foreach ($eventos as $evento) {
+                $evento->updateMosca($this);
+            }
+        }
+    }
+
     /**
      * Object selection
      *

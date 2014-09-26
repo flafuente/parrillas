@@ -130,13 +130,13 @@ class Evento extends Model
         }
 
         //Datos entrada
-        $mosca = new Mosca($entrada->moscaId);
         $this->tipo = $entrada->tipoId;
         $this->houseNumber = $entrada->houseNumber;
         $this->titulo = $entrada->nombre;
         $this->duracion = $entrada->duracion;
         $this->tcIn = $entrada->tcIn;
         $this->segmento = $entrada->segmento;
+        $mosca = new Mosca($entrada->moscaId);
         $this->logo = $mosca->codigo;
 
         //Fechas / Orden
@@ -166,6 +166,27 @@ class Evento extends Model
             self::actualizarFechas($data["fecha"]);
         };
 
+    }
+
+    public function updateEntrada($entrada)
+    {
+        if ($entrada->id) {
+            $this->tipo = $entrada->tipoId;
+            $this->houseNumber = $entrada->houseNumber;
+            $this->titulo = $entrada->nombre;
+            $this->duracion = $entrada->duracion;
+            $this->tcIn = $entrada->tcIn;
+            $this->segmento = $entrada->segmento;
+            $this->update();
+        }
+    }
+
+    public function updateMosca($mosca)
+    {
+        if ($mosca->id) {
+            $this->logo = $mosca->codigo;
+            $this->update();
+        }
     }
 
     public function postInsert($data = array())
@@ -283,6 +304,24 @@ class Evento extends Model
     public function preUpdate()
     {
         $this->dateUpdate = date("Y-m-d H:i:s");
+    }
+
+    public static function getByMoscaId($moscaId)
+    {
+        if ($moscaId) {
+            $db = Registry::getDb();
+            //Query
+            $query = "SELECT * FROM `eventos` WHERE `entradaId` IN (SELECT `id` FROM `entradas` WHERE `moscaId` IN (SELECT `id` FROM `moscas` WHERE `id` = :moscaId))";
+            $params = array(":moscaId" => $moscaId);
+            $rows = $db->query($query, $params);
+            if (count($rows)) {
+                foreach ($rows as $row) {
+                    $return[] = new Evento($row);
+                }
+
+                return $return;
+            }
+        }
     }
 
     /**
