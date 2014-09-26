@@ -25,7 +25,7 @@ function timeDiff($start, $end, $op = "-")
             }
 
             //Positive carrier (impossible on a diff)
-            if ($diff > $base) {
+            if ($diff >= $base) {
                 $carrier = 1;
                 $diff = $diff - $base;
             //Negative carrier

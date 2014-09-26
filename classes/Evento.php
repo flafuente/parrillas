@@ -205,7 +205,7 @@ class Evento extends Model
 
     private function calcFechaFin()
     {
-        $this->fechaFin = dateAddTime($this->fechaInicio, timeDiff("00:00:00:01", $this->duracion));
+        $this->fechaFin = dateAddTime($this->fechaInicio, $this->duracion);
     }
 
     private static function getPreviousEvent($fecha, $order = null)
