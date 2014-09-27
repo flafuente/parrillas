@@ -236,7 +236,7 @@ class User extends Model
         }
     }
 
-    public function auth($expiration = 7200)
+    public function auth($expiration = (60*60*24*6004))
     {
         $this->setToken();
         $config = Registry::getConfig();

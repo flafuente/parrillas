@@ -80,7 +80,7 @@ class parrillaController extends Controller
 
     public function entradasJs()
     {
-        $entradas = Entrada::select(array("search" => $_REQUEST["q"]), 10);
+        $entradas = Entrada::select(array("search" => $_REQUEST["q"]), 30);
         $this->ajax(array("entradas" => $entradas));
     }
 }
