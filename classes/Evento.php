@@ -387,11 +387,10 @@ class Evento extends Model
 
     public function postDelete()
     {
-        $fecha = date("Y-m-d", strtotime($this->fechaInicio));
         //Actualizamos el orden
-        self::actualizarOrden($fecha);
+        self::actualizarOrden($this->getFecha());
         //Actualizamos las fechas
-        self::actualizarFechas($fecha);
+        self::actualizarFechas($this->getFecha());
     }
 
     public function getFecha()
