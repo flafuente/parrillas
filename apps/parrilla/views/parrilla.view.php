@@ -79,7 +79,7 @@ Toolbar::render();
                 Crear entrada
             </label>
             <div class="form-group">
-                <div class="col-sm-3">
+                <div class="col-sm-9">
                     <input type="text" name="entradaId" id="entradaId" class="form-control select2entradas">
                 </div>
             </div>
