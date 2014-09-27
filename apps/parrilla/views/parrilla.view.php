@@ -203,7 +203,7 @@ Toolbar::render();
             </div>
             <div class="modal-body">
                 <form class="form-horizontal" role="form">
-                    <label for="entradaId" class="col-sm-3 control-label">
+                    <label for="entradaId" class="col-sm-8 control-label">
                         Crear entrada
                     </label>
                     <div class="form-group">
