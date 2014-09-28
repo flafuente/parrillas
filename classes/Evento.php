@@ -437,10 +437,10 @@ class Evento extends Model
         } else {
             $tf = "  ";
         }
-		$segmento=" ";
-		if ($entrada->segmento>0){
-			$segmento="X";
-		}
+        $segmento=" ";
+        if ($entrada->segmento>0) {
+            $segmento="X";
+        }
         if ($tipo->codigo == "P") {
             $type_material = "S";
         } elseif ($tipo->codigo == "C") {
@@ -479,9 +479,9 @@ class Evento extends Model
             //video_intime 11
             str_pad($entrada->tcIn, 11, " ", STR_PAD_RIGHT).
             //video_item 16
-            str_pad($this->houseNumber, 16, " ", STR_PAD_RIGHT).
+            str_pad(clearDiacritics($this->houseNumber), 16, " ", STR_PAD_RIGHT).
             //video_dbase_title 16
-            str_pad(substr($this->titulo, 0 , 16), 16, " ", STR_PAD_RIGHT).
+            str_pad(substr(clearDiacritics($this->titulo), 0 , 16), 16, " ", STR_PAD_RIGHT).
             //comment1
             str_pad(substr($this->titulo, 0 , 32), 32, " ", STR_PAD_RIGHT).
             //barker 1
@@ -506,25 +506,25 @@ class Evento extends Model
             "          ".
             //dsk2_duration 10
             "          ".
-			//vid_res 1
+            //vid_res 1
             " ".
-			//aspect_ratio 1
+            //aspect_ratio 1
             " ".
-			//caption_mode 1
+            //caption_mode 1
             " ".
-			//audio_mode 1
+            //audio_mode 1
             " ".
-			//OFFSET 38
+            //OFFSET 38
             "                                      ".
             //effect_item 16
             "                ".
-			//OFFSET 26
+            //OFFSET 26
             "                          ".
             //logo_src 6
             str_pad($mosca->codigo, 6, " ", STR_PAD_RIGHT).
             //logo 16
             str_pad($mosca->identificador, 16, " ", STR_PAD_RIGHT).
-			//OFFSET 10
+            //OFFSET 10
             "           ".
             //dsk3_src 6
             "      ".
@@ -536,7 +536,7 @@ class Evento extends Model
             "          ".
             //effect_src 6
             "      ".
-			//OFFSET 43
+            //OFFSET 43
             "                                           ".
             //prot_src 8
             "        ".
