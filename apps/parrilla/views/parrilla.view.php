@@ -27,6 +27,9 @@ Toolbar::render();
         <div class="col-sm-3">
             <input type="text" name="fecha" class="form-control" id="fecha" value="<?=date("d-m-Y");?>" placeholder="Fecha">
         </div>
+        <div class="col-sm-3">
+            <input type="text" name="hour" class="form-control hourMask" id="hour" value="07:00" placeholder="Hora">
+        </div>
     </div>
 </div>
 
@@ -89,9 +92,14 @@ Toolbar::render();
 </div>
 
 <script type="text/javascript" language="javascript" class="init">
+
+    //Hour Mask
+    $('input.hourMask').mask("00:00");
+
     var sum = 0;
     var table;
     var date = $("#fecha").val();
+    var hour = $("#hour").val();
     var order = 1;
 
     $(document).ready(function () {
@@ -112,6 +120,13 @@ Toolbar::render();
         tableInit();
     });
 
+    //Hour change
+    $(document).on('change', '#hour', function (e) {
+        hour = $("#hour").val();
+        $.ajax('<?=Url::site("parrilla/json");?>?date=' + date + '&hour=' + hour + '&action=updateHour');
+        tableInit();
+    });
+
     //Create row
     $(document).on('change', '#entradaId', function (e) {
         create($(this).val());
@@ -126,7 +141,7 @@ Toolbar::render();
 
     function create(entradaId, orden)
     {
-        $.ajax('<?=Url::site("parrilla/json");?>?date=' + date + '&action=new&entradaId=' + entradaId + '&order=' + orden);
+        $.ajax('<?=Url::site("parrilla/json");?>?date=' + date + '&hour=' + hour + '&action=new&entradaId=' + entradaId + '&order=' + orden);
         tableInit();
         $('#modalEntrada').modal('hide');
     }
@@ -150,8 +165,13 @@ Toolbar::render();
             "bDestroy": true,
             "bRetrieve": false,
             "fnRowCallback": function (nRow, aData, iDisplayIndex) {
+                //First row
+                if (aData[0] == 1) {
+                    date = aData[2].substr(0, 5);
+                    $("#hour").val(date);
+                }
                 nRow.setAttribute('id', aData.id);  //Initialize row id for every row
-                nRow.setAttribute('style',"background-color:"+aData[11]+";"); //Add color
+                nRow.setAttribute('style',"background-color:" + aData[11] + ";"); //Add color
 
             }
         });
@@ -167,6 +187,7 @@ Toolbar::render();
     }
 
     $(document).ready(function () {
+        //Select2 Entradas
         $(".select2entradas").select2({
             placeholder: "Crear entrada",
             minimumInputLength: 1,

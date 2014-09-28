@@ -41,24 +41,31 @@ class parrillaController extends Controller
     public function json()
     {
         $date = date("Y-m-d", strtotime($_REQUEST["date"]));
+        $hour = $_REQUEST["hour"];
         $action = $_REQUEST["action"];
+
         if (is_numeric($_REQUEST["order"]) && (int) $_REQUEST["order"] > 0) {
             $orden = (int) $_REQUEST["order"];
         }
         if ($_REQUEST["toPosition"] && $_REQUEST["fromPosition"]) {
             $action = "order";
         }
+
         switch ($action) {
             //Order
             case "order":
                 $evento = new Evento($_REQUEST["id"]);
                 $evento->order($date, $_REQUEST["toPosition"]);
             break;
+            //Hour update
+            case "updateHour":
+                Evento::actualizarFechas($date, $hour);
+            break;
             //New
             case "new":
                 $evento = new Evento();
                 $evento->entradaId = $_REQUEST["entradaId"];
-                $evento->insert(array("fecha" => $date, "order" => $orden));
+                $evento->insert(array("fecha" => $date, "hora" => $hour, "order" => $orden));
             break;
             //Delete
             case "delete":

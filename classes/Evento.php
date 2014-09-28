@@ -98,7 +98,6 @@ class Evento extends Model
      */
     public function preInsert($data = array())
     {
-
         $user = Registry::getUser();
         $this->userId = $user->id;
         $this->dateInsert = date("Y-m-d H:i:s");
@@ -111,10 +110,18 @@ class Evento extends Model
             $this->order = $data["order"];
         }
 
+        //Default starting Hour
+        $hora = $data["hora"] ? $data["hora"] : "07:00";
+
         //Tiene ED?
         if ($entrada->entradaIdEd) {
             $evento = new Evento();
-            $evento->insert(array("fecha" => $data["fecha"], "entradaId" => $entrada->entradaIdEd, "order" => $data["order"]));
+            $evento->insert(array(
+                "fecha" => $data["fecha"],
+                "hora" => $data["hora"],
+                "entradaId" => $entrada->entradaIdEd,
+                "order" => $data["order"]
+            ));
             //Avanzamos una posición
             if ($data["order"]) {
                 $this->order++;
@@ -153,17 +160,19 @@ class Evento extends Model
             $this->fechaInicio = $previousEvent->fechaFin;
             //Fin
             $this->calcFechaFin();
+            //Destruct hora
+            $hora = null;
         } else {
             //Orden
             $this->order = 1;
             //Inicio
-            $this->fechaInicio = $data["fecha"]." 07:00:00:00";
+            $this->fechaInicio = $data["fecha"]." ".$hora.":00:00";
             //Fin
             $this->calcFechaFin();
         }
 
         if ($data["order"]) {
-            self::actualizarFechas($data["fecha"]);
+            self::actualizarFechas($data["fecha"], $hora);
         };
 
     }
@@ -269,9 +278,15 @@ class Evento extends Model
         }
     }
 
-    public static function actualizarFechas($fecha)
+    public static function actualizarFechas($fecha, $hora = null)
     {
         if ($fecha) {
+
+            //Default starting Hour
+            if ($hora) {
+                $hora .= ":00:00";
+            }
+
             //Actualizamos las fechas
             $previousEvent = null;
             $eventos = Evento::select(array("fecha" => $fecha, "order" => "order", "orderDir" => "ASC"));
@@ -286,7 +301,7 @@ class Evento extends Model
                         $evento->calcFechaFin();
                     } else {
                         //Inicio
-                        $evento->fechaInicio = $fecha." 07:00:00:00";
+                        $evento->fechaInicio = $hora ? $fecha." ".$hora : $evento->fechaInicio;
                         //Fin
                         $evento->calcFechaFin();
                     }
