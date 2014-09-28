@@ -94,6 +94,10 @@
 					app = router + "/" + app;
 				}
 				window.location.href = URL + app + "/" +  action;
+				element.removeClass("disabled");
+				element.disabled = false;
+				//Lada spinners
+				Ladda.stopAll();
 				return false;
 			}
 			//Disable element
@@ -124,9 +128,11 @@
 			//Submit
 			$form.submit();
 			//Restore
-			if(ajax){
+			if(ajax || external){
 				element.removeClass("disabled");
 				element.disabled = false;
+				//Lada spinners
+				Ladda.stopAll();
 				$form.find('input[name=app]').val("");
 				$form.find('input[name=action]').val("");
 			}

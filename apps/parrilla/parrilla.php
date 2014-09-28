@@ -27,12 +27,15 @@ class parrillaController extends Controller
             foreach ($eventos as $i => $evento) {
                 $output .= $evento->telson(($i == 0))."\n";
             }
+            $filename = date("Ymd", strtotime($evento->getFecha()))."Tribro.txt";
+            header('Content-Type: text/plain');
+            header("Content-Disposition: attachment; filename=".$filename);
+            echo $output;
+            exit;
+        } else {
+            Registry::addMessage("Esta parrilla no tiene eventos", "error");
+            Url::redirect(Url::site("parrilla"));
         }
-        $filename = date("Ymd", strtotime($evento->getFecha()))."Tribro.txt";
-        header('Content-Type: text/plain');
-        header("Content-Disposition: attachment; filename=".$filename);
-        echo $output;
-        exit;
     }
 
     public function json()

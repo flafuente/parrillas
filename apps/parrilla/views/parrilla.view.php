@@ -10,7 +10,7 @@ Toolbar::addButton(
         "action" => "export",
         "class" => "primary",
         "spanClass" => "share-alt",
-        "noAjax" => true
+        "noAjax" => true,
     )
 );
 Toolbar::render();
