@@ -290,11 +290,11 @@ class Evento extends Model
                         //Fin
                         $evento->calcFechaFin();
                     }
-                    echo "Actualizando evento ".$evento->id."<br>";
+                    /*echo "Actualizando evento ".$evento->id."<br>";
                     echo " - Order: ".$evento->order."<br>";
                     echo " - Duracion: ".$evento->duracion."<br>";
                     echo " - Inicio: ".$evento->fechaInicio."<br>";
-                    echo " - Fin: ".$evento->fechaFin."<br><br>";
+                    echo " - Fin: ".$evento->fechaFin."<br><br>";*/
                     $evento->update();
                     $previousEvent = $evento;
                 }
