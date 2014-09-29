@@ -506,9 +506,9 @@ class Evento extends Model
             //spool_number 16
             "                ".
             //dsk_src 6
-            str_pad($mosca2->codigo, 6, " ", STR_PAD_RIGHT).
+            str_pad($mosca2->identificador, 6, " ", STR_PAD_RIGHT).
             //dsk_num 16
-            str_pad($mosca2->identificador, 16, " ", STR_PAD_RIGHT).
+            str_pad($mosca2->codigo, 16, " ", STR_PAD_RIGHT).
             //dsk_in_time 10
             "          ".
             //dsk_duration 10
@@ -536,9 +536,9 @@ class Evento extends Model
             //OFFSET 26
             "                          ".
             //logo_src 6
-            str_pad($mosca->codigo, 6, " ", STR_PAD_RIGHT).
+            str_pad($mosca->identificador, 6, " ", STR_PAD_RIGHT).
             //logo 16
-            str_pad($mosca->identificador, 16, " ", STR_PAD_RIGHT).
+            str_pad($mosca->codigo, 16, " ", STR_PAD_RIGHT).
             //OFFSET 10
             "           ".
             //dsk3_src 6
