@@ -30,7 +30,7 @@ class parrillaController extends Controller
             $filename = date("Ymd", strtotime($evento->getFecha()))."Tribro.txt";
             header('Content-Type: text/plain');
             header("Content-Disposition: attachment; filename=".$filename);
-            echo $output;
+            echo utf8_encode(clearDiacritics(utf8_decode($output)));
             exit;
         } else {
             Registry::addMessage("Esta parrilla no tiene eventos", "error");

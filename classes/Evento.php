@@ -494,9 +494,9 @@ class Evento extends Model
             //video_intime 11
             str_pad($entrada->tcIn, 11, " ", STR_PAD_RIGHT).
             //video_item 16
-            str_pad(clearDiacritics($this->houseNumber), 16, " ", STR_PAD_RIGHT).
+            str_pad($this->houseNumber, 16, " ", STR_PAD_RIGHT).
             //video_dbase_title 16
-            str_pad(substr(clearDiacritics($this->titulo), 0 , 16), 16, " ", STR_PAD_RIGHT).
+            str_pad(substr($this->titulo, 0 , 16), 16, " ", STR_PAD_RIGHT).
             //comment1
             str_pad(substr($this->titulo, 0 , 32), 32, " ", STR_PAD_RIGHT).
             //barker 1
