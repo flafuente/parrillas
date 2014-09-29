@@ -168,7 +168,7 @@ Toolbar::render();
                 //First row
                 if (aData[0] == 1) {
                     hour = aData[2].substr(0, 5);
-                    $("#hour").val(date);
+                    $("#hour").val(hour);
                 }
                 nRow.setAttribute('id', aData.id);  //Initialize row id for every row
                 nRow.setAttribute('style',"background-color:" + aData[11] + ";"); //Add color
