@@ -361,8 +361,8 @@ class Evento extends Model
         //Where
         if (isset($data["fecha"])) {
             $query .= " AND `fechaInicio` >= :fechaInicio AND `fechaFin` <= :fechaFin ";
-            $params[":fechaInicio"] = $data["fecha"]." 00:00:00:00";
-            $params[":fechaFin"] = $data["fecha"]." 23:59:59:24";
+            $params[":fechaInicio"] = $data["fecha"]." 03:00:00:00";
+            $params[":fechaFin"] = date("Y-m-d 02:59:59:24", strtotime($data["fecha"]." + 1 day"));
         }
         if ($data["orderNum"]) {
             $query .= " AND `order` = :orderNum ";
