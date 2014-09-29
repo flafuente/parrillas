@@ -167,7 +167,7 @@ Toolbar::render();
             "fnRowCallback": function (nRow, aData, iDisplayIndex) {
                 //First row
                 if (aData[0] == 1) {
-                    date = aData[2].substr(0, 5);
+                    hour = aData[2].substr(0, 5);
                     $("#hour").val(date);
                 }
                 nRow.setAttribute('id', aData.id);  //Initialize row id for every row
