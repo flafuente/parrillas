@@ -21,6 +21,8 @@ class parrillaController extends Controller
     public function export()
     {
         $date = date("Y-m-d", strtotime($_REQUEST["fecha"]));
+        //Force order
+        Evento::actualizarFechas($date);
         $eventos = Evento::select(array("fecha" => $date));
         $output = "";
         if (count($eventos)) {
