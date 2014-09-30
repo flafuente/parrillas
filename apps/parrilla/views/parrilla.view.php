@@ -101,6 +101,7 @@ Toolbar::render();
     var date = $("#fecha").val();
     var hour = $("#hour").val();
     var order = 1;
+    var firstTime = true;
 
     $(document).ready(function () {
         table = tableInit();
@@ -110,7 +111,7 @@ Toolbar::render();
     //Delte row
     $(document).on('click', '.delete', function (e) {
         id = $(this).closest('tr').attr("id");
-        $.ajax('<?=Url::site("parrilla/json");?>?date=' + date + '&action=delete&id=' + id);
+        $.ajax('<?=Url::site("parrilla/json");?>?date=' + date + '&action=delete&id=' + id + '&hour=' + hour);
         tableInit();
     });
 
@@ -118,6 +119,7 @@ Toolbar::render();
     $(document).on('change', '#fecha', function (e) {
         date = $("#fecha").val();
         tableInit();
+        firstTime = true;
     });
 
     //Hour change
@@ -155,7 +157,7 @@ Toolbar::render();
 
     function tableInit()
     {
-        url = '<?=Url::site("parrilla/json");?>?date=' + date;
+        url = '<?=Url::site("parrilla/json");?>?date=' + date + '&hour=' + hour;
         table = $('#example').DataTable({
             "paging":   false,
             "bPaginate": false,
@@ -166,9 +168,10 @@ Toolbar::render();
             "bRetrieve": false,
             "fnRowCallback": function (nRow, aData, iDisplayIndex) {
                 //First row
-                if (aData[0] == 1) {
+                if (firstTime) {
                     hour = aData[2].substr(0, 5);
                     $("#hour").val(hour);
+                    firstTime = false;
                 }
                 nRow.setAttribute('id', aData.id);  //Initialize row id for every row
                 nRow.setAttribute('style',"background-color:" + aData[11] + ";"); //Add color

@@ -240,17 +240,17 @@ class Evento extends Model
         }
     }
 
-    public function order($fecha, $toPosition)
+    public function order($fecha, $toPosition, $hora = null)
     {
         //Actualizamos la posición del evento
         $this->order = $toPosition;
         $this->update();
 
         //Actualizamos el orden
-        $this->actualizarOrden($fecha, $this->id);
+        self::actualizarOrden($fecha, $this->id);
 
         //Actualizamos las fechas
-        self::actualizarFechas($fecha);
+        self::actualizarFechas($fecha, $hora);
     }
 
     public static function actualizarOrden($fecha, $ignoreId = null)
@@ -284,7 +284,9 @@ class Evento extends Model
 
             //Default starting Hour
             if ($hora) {
-                $hora .= ":00:00";
+                if (count(explode(":", $hora)) == 2) {
+                    $hora .= ":00:00";
+                }
             }
 
             //Actualizamos las fechas
@@ -362,7 +364,7 @@ class Evento extends Model
         if (isset($data["fecha"])) {
             $query .= " AND `fechaInicio` >= :fechaInicio AND `fechaFin` <= :fechaFin ";
             $params[":fechaInicio"] = $data["fecha"]." 03:00:00:00";
-            $params[":fechaFin"] = date("Y-m-d 02:59:59:24", strtotime($data["fecha"]." + 1 day"));
+            $params[":fechaFin"] = date("Y-m-d 02:59:59:24", strtotime($data["fecha"]." +1 day"));
         }
         if ($data["orderNum"]) {
             $query .= " AND `order` = :orderNum ";
@@ -398,14 +400,6 @@ class Evento extends Model
                 return $results;
             }
         }
-    }
-
-    public function postDelete()
-    {
-        //Actualizamos el orden
-        self::actualizarOrden($this->getFecha());
-        //Actualizamos las fechas
-        self::actualizarFechas($this->getFecha());
     }
 
     public function getFecha()

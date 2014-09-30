@@ -57,7 +57,7 @@ class parrillaController extends Controller
             //Order
             case "order":
                 $evento = new Evento($_REQUEST["id"]);
-                $evento->order($date, $_REQUEST["toPosition"]);
+                $evento->order($date, $_REQUEST["toPosition"], $hour);
             break;
             //Hour update
             case "updateHour":
@@ -73,6 +73,10 @@ class parrillaController extends Controller
             case "delete":
                 $evento = new Evento($_REQUEST["id"]);
                 $evento->delete();
+                //Actualizamos el orden
+                Evento::actualizarOrden($date);
+                //Actualizamos las fechas
+                Evento::actualizarFechas($date, $hour);
             break;
         }
 

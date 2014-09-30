@@ -52,8 +52,9 @@ function dateAddTime($date, $time)
     $diffArray = explode(":", $timeDiff);
 
     //>24?
-    if ($diffArray[0]>=24) {
-        $diffArray[0]-=24;
+    if ($diffArray[0] >= 24) {
+        $diffArray[0] -= 24;
+        $diffArray[0] = str_pad($diffArray[0], 2, "0", STR_PAD_LEFT);
         $start[0] = date("Y-m-d", strtotime($start[0]." +1 day"));
     }
 
