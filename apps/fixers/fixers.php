@@ -35,4 +35,11 @@ class fixersController extends Controller
     {
         echo timeDiff("00:46:02:24", "00:01:14:19", "+");
     }
+
+    public function test()
+    {
+        $titulo = "EL CIRCULO 1x01";
+        $evento = new Evento(592);
+        echo str_pad(substr(utf8_decode($evento->titulo), 0 , 16), 16, "X", STR_PAD_RIGHT);
+    }
 }

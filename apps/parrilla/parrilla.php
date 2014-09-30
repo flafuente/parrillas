@@ -29,10 +29,10 @@ class parrillaController extends Controller
             foreach ($eventos as $i => $evento) {
                 $output .= $evento->telson(($i == 0))."\n";
             }
-            $filename = date("Ymd", strtotime($evento->getFecha()))."Tribro.txt";
+            $filename = date("Ymd", strtotime($evento->getFecha()))."Tribo.txt";
             header('Content-Type: text/plain');
             header("Content-Disposition: attachment; filename=".$filename);
-            echo utf8_encode(clearDiacritics(utf8_decode($output)));
+            echo clearDiacritics($output);
             exit;
         } else {
             Registry::addMessage("Esta parrilla no tiene eventos", "error");
