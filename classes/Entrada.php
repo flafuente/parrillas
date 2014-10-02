@@ -168,6 +168,12 @@ class Entrada extends Model
         $this->calcDuracion();
     }
 
+    public function postInsert()
+    {
+        //Log
+        Log::add(LOG_ADD_ENTRADA, $this, true);
+    }
+
     /**
      * Update validation
      *
@@ -202,7 +208,13 @@ class Entrada extends Model
             foreach ($eventos as $evento) {
                 $evento->updateEntrada($this);
             }
+
+            //Actualizamos las fechas
+            Evento::actualizarFechas($evento->getFecha());
         }
+
+        //Log
+        Log::add(LOG_UPDATE_ENTRADA, $this, true);
     }
 
     private function clearEdFin()
@@ -303,6 +315,12 @@ class Entrada extends Model
                 return $results;
             }
         }
+    }
+
+    public function postDelete()
+    {
+        //Log
+        Log::add(LOG_DELETE_ENTRADA, $this, true);
     }
 
     public function getJSon()

@@ -123,6 +123,12 @@ class Mosca extends Model
         $this->dateInsert = date("Y-m-d H:i:s");
     }
 
+    public function postInsert()
+    {
+        //Log
+        Log::add(LOG_ADD_MOSCA, $this, true);
+    }
+
     /**
      * Update validation
      *
@@ -154,6 +160,9 @@ class Mosca extends Model
                 $evento->updateMosca($this);
             }
         }
+
+        //Log
+        Log::add(LOG_UPDATE_MOSCA, $this, true);
     }
 
     /**
@@ -215,5 +224,11 @@ class Mosca extends Model
                 return $results;
             }
         }
+    }
+
+    public function postDelete()
+    {
+        //Log
+        Log::add(LOG_DELETE_MOSCA, $this, true);
     }
 }

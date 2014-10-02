@@ -232,6 +232,9 @@ class User extends Model
             $user->lastvisitDate = date("Y-m-d H:i:s");
             $user->update();
 
+            //Log
+            Log::add(LOG_LOGIN);
+
             return $user;
         }
     }
@@ -267,9 +270,13 @@ class User extends Model
     public static function logout()
     {
         $config = Registry::getConfig();
+
         //Destroy Cookies
         unset($_COOKIE[$config->get("cookie")]);
         setcookie($config->get("cookie"), null, -1, "/");
+
+        //Log
+        Log::add(LOG_LOGOUT);
 
         return true;
     }

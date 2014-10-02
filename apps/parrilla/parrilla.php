@@ -19,6 +19,9 @@ class parrillaController extends Controller
     {
         $html = $this->view("views.parrilla");
         $this->render($html);
+
+        //Log
+        Log::add(LOG_LISTAR_PARRILLA);
     }
 
     public function export()
@@ -36,6 +39,8 @@ class parrillaController extends Controller
             header('Content-Type: text/plain');
             header("Content-Disposition: attachment; filename=".$filename);
             echo clearDiacritics($output);
+            //Log
+            Log::add(LOG_EXPORT_PARRILLA, $_REQUEST);
             exit;
         } else {
             Registry::addMessage("Esta parrilla no tiene eventos", "error");
@@ -61,16 +66,22 @@ class parrillaController extends Controller
             case "order":
                 $evento = new Evento($_REQUEST["id"]);
                 $evento->order($date, $_REQUEST["toPosition"], $hour);
+                //Log
+                Log::add(LOG_MOVE_EVENTO, $_REQUEST);
             break;
             //Hour update
             case "updateHour":
                 Evento::actualizarFechas($date, $hour);
+                //Log
+                Log::add(LOG_UPDATE_HOUR_PARRILLA, $_REQUEST);
             break;
             //New
             case "new":
                 $evento = new Evento();
                 $evento->entradaId = $_REQUEST["entradaId"];
                 $evento->insert(array("fecha" => $date, "hora" => $hour, "order" => $orden));
+                //Log
+                Log::add(LOG_ADD_EVENTO, $_REQUEST);
             break;
             //Delete
             case "delete":
@@ -80,6 +91,8 @@ class parrillaController extends Controller
                 Evento::actualizarOrden($date);
                 //Actualizamos las fechas
                 Evento::actualizarFechas($date, $hour);
+                //Log
+                Log::add(LOG_DELETE_EVENTO, $_REQUEST);
             break;
         }
 

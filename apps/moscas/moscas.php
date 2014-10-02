@@ -22,6 +22,9 @@ class moscasController extends Controller
         $this->setData("pag", $pag);
         $html = $this->view("views.list");
         $this->render($html);
+
+        //Log
+        Log::add(LOG_LISTAR_MOSCA);
     }
 
     public function edit()
@@ -38,10 +41,14 @@ class moscasController extends Controller
         if ($mosca->id) {
             if ($mosca->update($_REQUEST)) {
                 Registry::addMessage("Mosca actualizada satisfactoriamente", "success", "", Url::site("moscas"));
+                //Log
+                Log::add(LOG_ADD_MOSCA, $mosca);
             }
         } else {
             if ($mosca->insert($_REQUEST)) {
                 Registry::addMessage("Mosca creada satisfactoriamente", "success", "", Url::site("moscas"));
+                //Log
+                Log::add(LOG_UPDATE_MOSCA, $mosca);
             }
         }
         $this->ajax();
@@ -55,6 +62,8 @@ class moscasController extends Controller
         if ($mosca->id) {
             if ($mosca->delete()) {
                 Registry::addMessage("Mosca eliminada satisfactoriamente", "success");
+                //Log
+                Log::add(LOG_DELETE_MOSCA, $mosca);
             }
         }
         Url::redirect(Url::site("moscas"));

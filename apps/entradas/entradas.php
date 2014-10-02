@@ -22,6 +22,9 @@ class entradasController extends Controller
         $this->setData("pag", $pag);
         $html = $this->view("views.list");
         $this->render($html);
+
+        //Log
+        Log::add(LOG_LISTAR_ENTRADA);
     }
 
     public function edit()
@@ -51,12 +54,17 @@ class entradasController extends Controller
         if ($entrada->id) {
             if ($entrada->update($_REQUEST)) {
                 Registry::addMessage("Entrada actualizada satisfactoriamente", "success", "", $redirect);
+                //Log
+                Log::add(LOG_UPDATE_ENTRADA, $entrada);
             }
         } else {
             if ($entrada->insert($_REQUEST)) {
                 Registry::addMessage("Entrada creada satisfactoriamente", "success", "", $redirect);
+                //Log
+                Log::add(LOG_ADD_ENTRADA, $entrada);
             }
         }
+
         $this->ajax();
     }
 
@@ -68,6 +76,8 @@ class entradasController extends Controller
         if ($entrada->id) {
             if ($entrada->delete()) {
                 Registry::addMessage("Entrada eliminada satisfactoriamente", "success");
+                //Log
+                Log::add(LOG_DELETE_ENTRADA, $entrada);
             }
         }
         Url::redirect(Url::site("entradas"));

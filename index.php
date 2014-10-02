@@ -6,6 +6,9 @@ define("_EXE", 1);
 //Configuration
 include 'config.php';
 
+//Constants
+include 'constants.php';
+
 //Composer autoload
 require 'vendor/autoload.php';
 

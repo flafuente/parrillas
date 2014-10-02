@@ -11,7 +11,7 @@ $_config['defaultLang'] = "en_GB";
 $_config['template'] = "bootstrap";
 $_config['defaultApp'] = "parrilla";
 $_config['defaultLimit'] = 10;
-$_config['debug'] = true;
+$_config['debug'] = false;
 $_config['cookie'] = "authtriboparrillas";
 
 //Mail

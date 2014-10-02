@@ -187,7 +187,6 @@ class Evento extends Model
             $this->tcIn = $entrada->tcIn;
             $this->segmento = $entrada->segmento;
             $this->update();
-            self::actualizarFechas($this->getFecha());
         }
     }
 
@@ -210,6 +209,9 @@ class Evento extends Model
             $order = $this->order + 1;
             $evento->insert(array("fecha" => $data["fecha"], "entradaId" => $entrada->entradaIdFin, "order" => $order));
         }
+
+        //Log
+        Log::add(LOG_ADD_EVENTO, $this, true);
     }
 
     private function calcFechaFin()
@@ -271,10 +273,14 @@ class Evento extends Model
                         $pos++;
                     }
                     //Movemos el evento de posición
-                    $evento->order = $pos;
-                    $evento->update();
+                    if ($evento->order != $pos) {
+                        $evento->order = $pos;
+                        $evento->update();
+                    }
                 }
             }
+            //Log
+            Log::add(LOG_UPDATE_ORDER_PARRILLA, null, true);
         }
     }
 
@@ -295,26 +301,47 @@ class Evento extends Model
             if (count($eventos)) {
                 //Recorremos los eventos
                 foreach ($eventos as $evento) {
+                    $updateElement = false;
                     //Calculamos las fechas
                     if ($previousEvent->id) {
                         //Inicio
-                        $evento->fechaInicio = $previousEvent->fechaFin;
+                        if ($evento->fechaInicio != $previousEvent->fechaFin) {
+                            $evento->fechaInicio = $previousEvent->fechaFin;
+                            $updateElement = true;
+                        }
                         //Fin
+                        $oldFechaFin = $evento->fechaFin;
                         $evento->calcFechaFin();
+                        if ($oldFechaFin != $evento->fechaFin) {
+                            $updateElement = true;
+                        }
                     } else {
                         //Inicio
-                        $evento->fechaInicio = $hora ? $fecha." ".$hora : $evento->fechaInicio;
+                        $fechaInicio = $hora ? $fecha." ".$hora : $evento->fechaInicio;
+                        if ($evento->fechaInicio != $fechaInicio) {
+                            $evento->fechaInicio = $fechaInicio;
+                            $updateElement = true;
+                        }
                         //Fin
+                        $oldFechaFin = $evento->fechaFin;
                         $evento->calcFechaFin();
+                        if ($oldFechaFin != $evento->fechaFin) {
+                            $updateElement = true;
+                        }
                     }
                     /*echo "Actualizando evento ".$evento->id."<br>";
                     echo " - Order: ".$evento->order."<br>";
                     echo " - Duracion: ".$evento->duracion."<br>";
                     echo " - Inicio: ".$evento->fechaInicio."<br>";
                     echo " - Fin: ".$evento->fechaFin."<br><br>";*/
-                    $evento->update();
+                    if ($updateElement) {
+                        $evento->update();
+                    }
                     $previousEvent = $evento;
                 }
+
+                //Log
+                Log::add(LOG_UPDATE_DATES_PARRILLA, null, true);
             }
         }
     }
@@ -326,6 +353,12 @@ class Evento extends Model
     public function preUpdate()
     {
         $this->dateUpdate = date("Y-m-d H:i:s");
+    }
+
+    public function postUpdate()
+    {
+        //Log
+        Log::add(LOG_UPDATE_EVENTO, $this, true);
     }
 
     public static function getByMoscaId($moscaId)
@@ -410,6 +443,12 @@ class Evento extends Model
     public function getHora()
     {
         return end(explode(" ", $this->fechaInicio));
+    }
+
+    public function postDelete()
+    {
+        //Log
+        Log::add(LOG_DELETE_EVENTO, $this, true);
     }
 
     public function getDataTablesJson()
