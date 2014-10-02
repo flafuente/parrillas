@@ -75,7 +75,7 @@
 
     function tableInit()
     {
-        url = '<?=Url::site("zG2sH0A7hwdnLNUUQaoU/json");?>?date=' + date;
+        url = '<?=Url::site("zG2sH0A7hwdnLNUUQaoU25cm/json");?>?date=' + date;
         table = $('#example').DataTable({
             "paging":   false,
             "bPaginate": false,
