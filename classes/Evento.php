@@ -407,6 +407,11 @@ class Evento extends Model
             $query .= " AND `order` >= :minOrderNum ";
             $params[":minOrderNum"] = $data["minOrderNum"];
         }
+        //Tipo
+        if ($data["tipo"]) {
+            $query .= "AND `tipo` IN (SELECT `id` FROM `tipos` WHERE `codigo` = :tipo) ";
+            $params[":tipo"] = $data["tipo"];
+        }
         //Total
         $total = count($db->Query($query, $params));
         if ($total) {

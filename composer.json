@@ -9,7 +9,7 @@
 		]
 	},
 	"require": {
-		"light-framework/core": "dev-master",
+		"light-framework/core": "v1.0",
 		"robmorgan/phinx": "*"
 	},
 	"minimum-stability": "dev"

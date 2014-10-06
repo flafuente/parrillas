@@ -28,7 +28,7 @@ class externalController extends Controller
     public function parrilla()
     {
         //Select
-        $eventos = Evento::select(array("fecha" => $_REQUEST["fecha"]));
+        $eventos = Evento::select(array("fecha" => $_REQUEST["fecha"], "tipo" => "P"));
         $this->ajax(array("eventos" => $eventos));
     }
 }
