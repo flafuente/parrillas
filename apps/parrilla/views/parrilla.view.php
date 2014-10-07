@@ -328,14 +328,14 @@ Toolbar::render();
                         <input type="text" name="fecha" class="form-control" id="fechaImportar" value="<?=date("d-m-Y", strtotime("now -1 day"));?>" placeholder="Fecha">
                     </div>
                 </div>
-				<div style='clear:both;'><button type="button" class="btn btn-primary" id="importBtn">Importar</button></div>
+				<div style='clear:both;'><button type="button" class="btn importBtn btn-primary" id="">Importar</button></div>
                 <div class="form-group">
                     <div id="importarParrilla"></div>
                 </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-                <button type="button" class="btn btn-primary" id="importBtn">Importar</button>
+                <button type="button" class="btn importBtn btn-primary" id="">Importar</button>
             </div>
         </div>
     </div>
