@@ -162,7 +162,7 @@ Toolbar::render();
     });
 
     //Import action
-    $(document).on('click', '#importBtn', function (e) {
+    $(document).on('click', '.importBtn', function (e) {
 
         //Get all checked values
         eventosId = $("#importarParrilla input:checkbox:checked").map(function () {
@@ -328,6 +328,7 @@ Toolbar::render();
                         <input type="text" name="fecha" class="form-control" id="fechaImportar" value="<?=date("d-m-Y", strtotime("now -1 day"));?>" placeholder="Fecha">
                     </div>
                 </div>
+				<div style='clear:both;'><button type="button" class="btn btn-primary" id="importBtn">Importar</button></div>
                 <div class="form-group">
                     <div id="importarParrilla"></div>
                 </div>
