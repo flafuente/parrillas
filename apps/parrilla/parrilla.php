@@ -83,6 +83,19 @@ class parrillaController extends Controller
                 //Log
                 Log::add(LOG_ADD_EVENTO, $_REQUEST);
             break;
+            //Import
+            case "import":
+                $order = $_REQUEST["order"];
+                if (count($_REQUEST["eventosId"])) {
+                    foreach ($_REQUEST["eventosId"] as $eventoId) {
+                        $evento = new Evento($eventoId);
+                        $evento->insert(array("fecha" => $date, "hora" => $hour, "order" => $order, "force" => true));
+                        $order++;
+                    }
+                }
+                //Log
+                Log::add(LOG_IMPORT_EVENTOS, $_REQUEST);
+            break;
             //Delete
             case "delete":
                 $evento = new Evento($_REQUEST["id"]);
@@ -116,5 +129,17 @@ class parrillaController extends Controller
     {
         $entradas = Entrada::select(array("search" => $_REQUEST["q"]), 30);
         $this->ajax(array("entradas" => $entradas));
+    }
+
+    public function preview()
+    {
+        //Select
+        $date = date("Y-m-d", strtotime($_REQUEST["fecha"]));
+        $eventos = Evento::select(array("fecha" => $date));
+
+        $this->setData("eventos", $eventos);
+        $data["html"] = $this->view("views.preview");
+
+        $this->ajax($data);
     }
 }

@@ -103,10 +103,7 @@ Toolbar::render();
     var order = 1;
     var firstTime = true;
 
-    $(document).ready(function () {
-        table = tableInit();
-        $("#fecha").datepicker({ dateFormat: "dd-mm-yy" });
-    });
+    /**** Delete *****/
 
     //Delte row
     $(document).on('click', '.delete', function (e) {
@@ -115,19 +112,7 @@ Toolbar::render();
         tableInit();
     });
 
-    //Date change
-    $(document).on('change', '#fecha', function (e) {
-        date = $("#fecha").val();
-        tableInit();
-        firstTime = true;
-    });
-
-    //Hour change
-    $(document).on('change', '#hour', function (e) {
-        hour = $("#hour").val();
-        $.ajax('<?=Url::site("parrilla/json");?>?date=' + date + '&hour=' + hour + '&action=updateHour');
-        tableInit();
-    });
+    /**** Create *****/
 
     //Create row
     $(document).on('change', '#entradaId', function (e) {
@@ -155,6 +140,86 @@ Toolbar::render();
         order = $(this).attr("data-order");
     });
 
+    /**** Import *****/
+
+    //Import (modal)
+    $(document).on('click', '.importModal', function (e) {
+        $('#modalImportar').modal('show');
+        order = $(this).attr("data-order");
+    });
+
+    //Import modal date change
+    $(document).on('change', '#fechaImportar', function (e) {
+        $.ajax({
+            url: '<?=Url::site("parrilla/preview");?>',
+            data: {fecha: $("#fechaImportar").val()},
+            method: 'get',
+            dataType: 'json',
+            success: function (data) {
+                $('#importarParrilla').html(data.data.html);
+            },
+        })
+    });
+
+    //Import action
+    $(document).on('click', '#importBtn', function (e) {
+
+        //Get all checked values
+        eventosId = $("#importarParrilla input:checkbox:checked").map(function () {
+          return $(this).val();
+        }).get();
+
+        //Import
+        $.ajax({
+            url: '<?=Url::site("parrilla/json");?>',
+            data: {
+                date: date,
+                hour: hour,
+                action: "import",
+                order: order,
+                eventosId: eventosId,
+            },
+            method: 'get',
+            dataType: 'json',
+        })
+
+        //Reload table
+        tableInit();
+
+        //Close modal
+        $('#modalImportar').modal('hide');
+    });
+
+    /**** Inits *****/
+
+    //DatePickers
+    $(document).ready(function () {
+        table = tableInit();
+        $("#fecha").datepicker({ dateFormat: "dd-mm-yy" });
+        $("#fechaImportar").datepicker({ dateFormat: "dd-mm-yy" });
+    });
+
+    //Date change
+    $(document).on('change', '#fecha', function (e) {
+        date = $("#fecha").val();
+        tableInit();
+        firstTime = true;
+    });
+
+    //Hour change
+    $(document).on('change', '#hour', function (e) {
+        hour = $("#hour").val();
+        $.ajax('<?=Url::site("parrilla/json");?>?date=' + date + '&hour=' + hour + '&action=updateHour');
+        tableInit();
+    });
+
+    //Import TR Click
+    $(document).on('click', 'tr.clickable', function (e) {
+        checkbox = $(this).find("input");
+        checkbox.attr("checked", !checkbox.attr("checked"));
+    });
+
+    //DataTable
     function tableInit()
     {
         url = '<?=Url::site("parrilla/json");?>?date=' + date + '&hour=' + hour;
@@ -189,6 +254,7 @@ Toolbar::render();
         return table;
     }
 
+    /* Select 2 */
     $(document).ready(function () {
         //Select2 Entradas
         $(".select2entradas").select2({
@@ -217,7 +283,7 @@ Toolbar::render();
     });
 </script>
 
-<!-- Modal -->
+<!-- Modal Entrada -->
 <div class="modal fade" id="modalEntrada" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -240,6 +306,35 @@ Toolbar::render();
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
                 <button type="button" class="btn btn-primary" id="modalSave">Crear</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Importar -->
+<div class="modal fade" id="modalImportar" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Cerrar</span></button>
+                <h4 class="modal-title" id="myModalLabel">Importar</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="fecha" class="col-sm-2 control-label">
+                        Fecha
+                    </label>
+                    <div class="col-sm-3">
+                        <input type="text" name="fecha" class="form-control" id="fechaImportar" value="<?=date("d-m-Y", strtotime("now -1 day"));?>" placeholder="Fecha">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div id="importarParrilla"></div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-primary" id="importBtn">Importar</button>
             </div>
         </div>
     </div>

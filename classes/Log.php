@@ -69,6 +69,8 @@ class Log extends Model
 
         LOG_UPDATE_ORDER_PARRILLA => "Mass update order parrilla",
         LOG_UPDATE_DATES_PARRILLA => "Mass update dates parrilla",
+
+        LOG_IMPORT_EVENTOS => "Eventos importados"
     );
 
     /**

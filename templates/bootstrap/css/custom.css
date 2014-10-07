@@ -91,3 +91,7 @@ input[type="text"].is-autocheck-successful{
 input[type="text"].is-autocheck-faliure{
 	background-image: url("../img/error.png");
 }
+
+tr.clickable{
+	cursor: pointer;
+}

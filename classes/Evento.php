@@ -114,13 +114,14 @@ class Evento extends Model
         $hora = $data["hora"] ? $data["hora"] : "07:00";
 
         //Tiene ED?
-        if ($entrada->entradaIdEd) {
+        if ($entrada->entradaIdEd && !$data["force"]) {
             $evento = new Evento();
             $evento->insert(array(
                 "fecha" => $data["fecha"],
                 "hora" => $data["hora"],
                 "entradaId" => $entrada->entradaIdEd,
-                "order" => $data["order"]
+                "order" => $data["order"],
+                "force" => $data["force"],
             ));
             //Avanzamos una posición
             if ($data["order"]) {
@@ -204,10 +205,10 @@ class Evento extends Model
         $entrada = new Entrada($this->entradaId);
 
         //Tiene FIN?
-        if ($entrada->entradaIdFin) {
+        if ($entrada->entradaIdFin && !$data["force"]) {
             $evento = new Evento();
             $order = $this->order + 1;
-            $evento->insert(array("fecha" => $data["fecha"], "entradaId" => $entrada->entradaIdFin, "order" => $order));
+            $evento->insert(array("fecha" => $data["fecha"], "entradaId" => $entrada->entradaIdFin, "order" => $order, "force" => $data["force"]));
         }
 
         //Log
@@ -473,6 +474,7 @@ class Evento extends Model
             $this->logo,
             $this->segmento,
             "<button class='btn btn-xs newModal btn-success' data-order='".$this->order."'><span class='glyphicon glyphicon-plus'></span></a>".
+            "<button class='btn btn-xs importModal btn-primary' data-order='".$this->order."'><span class='glyphicon glyphicon-import'></span></a>".
             "<button class='btn btn-xs delete btn-danger'><span class='glyphicon glyphicon-remove'></span></a>",
             $tipo->color
         );
