@@ -97,6 +97,13 @@ class entradasController extends Controller
     {
         $diff = timeDiff($_REQUEST["tcIn"], timeDiff($_REQUEST["tcOut"], "00:00:00:01", "+"));
         if ($diff) {
+            //Mayor a 2h?
+            $tmp = explode(":", $diff);
+            if ($tmp[0] > 0 || $tmp[1] >= 2) {
+                $data["warning"] = true;
+            } else {
+                $data["warning"] = false;
+            }
             $data["status"] = "ok";
             $data["diff"] = $diff;
         } else {

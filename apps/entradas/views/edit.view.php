@@ -277,6 +277,11 @@ Toolbar::render();
                 field.addClass("is-autocheck-faliure");
             } else {
                 field.val(data.data.diff);
+                if (data.data.warning) {
+                    field.parent().append("<p class='help-block'>Cuidado, la hora es superior a 2h!</p>")
+                } else {
+                    field.closest("p.help-block").remove();
+                }
             }
         });
     });
