@@ -12,6 +12,9 @@ include 'constants.php';
 //Composer autoload
 require 'vendor/autoload.php';
 
+// Api definition
+Api::init("http://tribo.local/", "dfg34g45gdfgdfg");
+
 //Language init
 $language = new Language();
 

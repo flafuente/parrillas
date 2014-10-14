@@ -78,6 +78,36 @@ Toolbar::render();
                             </div>
                         </div>
                     <?php } ?>
+                    <div id="tribo">
+                        <!-- Programa -->
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">
+                                Programa
+                            </label>
+                            <div class="col-sm-8">
+                                <input type="text" name="programaId" class="form-control" id="programaId" value="<?=$entrada->programaId;?>" data-option="<?=$entrada->programa;?>">
+                                <input type="hidden" name="programa" id="programa" value="<?=$entrada->programa;?>">
+                            </div>
+                        </div>
+                        <!-- Capítulo -->
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">
+                                Capítulo
+                            </label>
+                            <div class="col-sm-8">
+                                <input type="text" name="capitulo" class="form-control" id="capitulo" value="<?=$entrada->capitulo;?>" placeholder="2x03">
+                            </div>
+                        </div>
+                        <!-- Titulo -->
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">
+                                Titulo
+                            </label>
+                            <div class="col-sm-8">
+                                <input type="text" name="titulo" class="form-control" id="titulo" value="<?=$entrada->titulo;?>">
+                            </div>
+                        </div>
+                    </div>
                     <!-- Nombre -->
                     <div class="form-group">
                         <label class="col-sm-3 control-label">
@@ -204,10 +234,12 @@ Toolbar::render();
                 $(".edfin").show();
                 $("#segmento").attr("checked", true);
                 $("#segmento").bootstrapSwitch('state', true);
+                $("#tribo").show();
             } else {
                 $(".edfin").hide();
                 $("#segmento").removeAttr("checked");
                 $("#segmento").bootstrapSwitch('state', false);
+                $("#tribo").hide();
             }
         });
         $("#tipoId").change();
@@ -283,6 +315,46 @@ Toolbar::render();
                     field.closest("p.help-block").remove();
                 }
             }
+        });
+    });
+
+    //API Tribo
+    $(document).ready(function () {
+        //Select2 Programas
+        $("#programaId").select2({
+            placeholder: "Buscar programa",
+            minimumInputLength: 1,
+            width: '100%',
+            ajax: {
+                url: "<?=Url::site('entradas/ajaxProgramas');?>",
+                dataType: 'json',
+                data: function (term) {
+                    return {
+                        q: term,
+                    };
+                },
+                results: function (data) {
+                    return {
+                        results: $.map(data.data.programas, function (item) {
+                            return {
+                                id: item.id,
+                                text: item.titulo
+                            }
+                        })
+                    };
+                }
+            },
+            <?php if ($entrada->programaId) { ?>
+                initSelection: function (item, callback) {
+                    var id = item.val();
+                    var text = item.data('option');
+                    var data = { id: id, text: text };
+                    callback(data);
+                }
+            <?php } ?>
+        });
+        $(document).on('change', '#programaId', function (e) {
+            $('#programa').val($("#programaId").select2('data').text);
         });
     });
 </script>

@@ -112,4 +112,10 @@ class entradasController extends Controller
 
         $this->ajax($data);
     }
+
+    public function ajaxProgramas()
+    {
+        $res = Api::request("programas/entradas", array("q" => $_REQUEST["q"]));
+        $this->ajax(array("programas" => $res->programas));
+    }
 }

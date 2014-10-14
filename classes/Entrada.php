@@ -26,6 +26,30 @@ class Entrada extends Model
     public $tipoId;
 
     /**
+     * Programa Id
+     * @var integer
+     */
+    public $programaId;
+
+    /**
+     * Programa
+     * @var string
+     */
+    public $programa;
+
+    /**
+     * Capitulo
+     * @var string
+     */
+    public $capitulo;
+
+    /**
+     * Titulo del capitulo
+     * @var string
+     */
+    public $titulo;
+
+    /**
      * House number
      * @example TB-PG-XXXXXXXX
      * @var string
@@ -170,6 +194,9 @@ class Entrada extends Model
 
     public function postInsert()
     {
+        //Tribo Sync
+        $this->syncTribo();
+
         //Log
         Log::add(LOG_ADD_ENTRADA, $this, true);
     }
@@ -212,6 +239,9 @@ class Entrada extends Model
             //Actualizamos las fechas
             Evento::actualizarFechas($evento->getFecha());
         }
+
+        //Tribo Sync
+        $this->syncTribo();
 
         //Log
         Log::add(LOG_UPDATE_ENTRADA, $this, true);
@@ -257,6 +287,17 @@ class Entrada extends Model
 
         //Return messages avoiding deletion
         return !Registry::getMessages(true);
+    }
+
+    private function syncTribo()
+    {
+        $data = array(
+            "programaId" => $this->programaId,
+            "capitulo" => $this->capitulo,
+            "titulo" => $this->titulo,
+            "id" => $this->id,
+        );
+        Api::request("programas/syncParrillas", $data);
     }
 
     /**
