@@ -147,6 +147,19 @@ class Entrada extends Model
         //Check houseNumber
         Self::validateHouseNumber($this->houseNumber, $this->tipoId, $this->id);
 
+        $tipo = new Tipo($this->tipoId);
+        if (strtoupper($tipo->codigo) != "P") {
+            if (!$this->programaId) {
+                Registry::addMessage("Debes seleccionar un programa", "error", "programaId");
+            }
+            if (!$this->capitulo) {
+                Registry::addMessage("Debes seleccionar un capítulo", "error", "capitulo");
+            }
+            if (!$this->titulo) {
+                Registry::addMessage("Debes seleccionar un titulo", "error", "titulo");
+            }
+        }
+
         //TC IN/OUT
         Self::validateTc($this->tcIn, "tcIn");
         Self::validateTc($this->tcOut, "tcOut");

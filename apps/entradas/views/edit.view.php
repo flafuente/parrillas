@@ -78,7 +78,7 @@ Toolbar::render();
                             </div>
                         </div>
                     <?php } ?>
-                    <div id="tribo">
+                    <div class='well' id="tribo">
                         <!-- Programa -->
                         <div class="form-group">
                             <label class="col-sm-3 control-label">
