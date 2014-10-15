@@ -148,7 +148,7 @@ class Entrada extends Model
         Self::validateHouseNumber($this->houseNumber, $this->tipoId, $this->id);
 
         $tipo = new Tipo($this->tipoId);
-        if (strtoupper($tipo->codigo) != "P") {
+        if (strtoupper($tipo->codigo) == "P") {
             if (!$this->programaId) {
                 Registry::addMessage("Debes seleccionar un programa", "error", "programaId");
             }
