@@ -1,5 +1,20 @@
 <?php
 
+function rememberFilter($name)
+{
+    $url = Registry::getUrl();
+    $app = $url->app;
+    if (isset($_REQUEST[$name])) {
+        if (!$_REQUEST[$name]) {
+            unset($_SESSION[$app.'.'.$name]);
+        } else {
+            $_SESSION[$app.'.'.$name] = $_REQUEST[$name];
+        }
+    } else {
+        $_REQUEST[$name] = $_SESSION[$app.'.'.$name];
+    }
+}
+
 function timeDiff($start, $end, $op = "-")
 {
     $start = explode(":", $start);

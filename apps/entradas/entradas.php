@@ -14,10 +14,18 @@ class entradasController extends Controller
 
     public function index()
     {
+        //Remember filters
+        rememberFilter('search');
+        rememberFilter('limit');
+        rememberFilter('limitStart');
+        rememberFilter('order');
+        rememberFilter('orderDir');
+
         $config = Registry::getConfig();
         $pag['total'] = 0;
         $pag['limit'] = $_REQUEST['limit'] ? $_REQUEST['limit'] : $config->get("defaultLimit");
         $pag['limitStart'] = $_REQUEST['limitStart'];
+
         $this->setData("results", Entrada::select($_REQUEST, $pag['limit'], $pag['limitStart'], $pag['total']));
         $this->setData("pag", $pag);
         $html = $this->view("views.list");
