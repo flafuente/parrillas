@@ -107,7 +107,7 @@ class entradasController extends Controller
         if ($diff) {
             //Mayor a 2h?
             $tmp = explode(":", $diff);
-            if ((int) $tmp[0] > 0 || (int) $tmp[1] >= 2) {
+            if ((int) $tmp[0] >= 2) {
                 $data["warning"] = true;
             } else {
                 $data["warning"] = false;
