@@ -32,6 +32,12 @@ class Mosca extends Model
     public $codigo;
 
     /**
+     * Duración
+     * @var string
+     */
+    public $duracion;
+
+    /**
      * Identificador
      * @var string
      */

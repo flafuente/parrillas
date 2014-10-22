@@ -49,7 +49,9 @@ Toolbar::render();
                     <th>Titulo</th>
                     <th>TC IN</th>
                     <th>Logo</th>
-                    <th>Segmento</th>
+                    <th>Logo2</th>
+                    <th>Delay</th>
+                    <th>S.</th>
                     <th></th>
                 </tr>
             </thead>
@@ -65,7 +67,9 @@ Toolbar::render();
                     <th>Titulo</th>
                     <th>TC IN</th>
                     <th>Logo</th>
-                    <th>Segmento</th>
+                    <th>Logo2</th>
+                    <th>Delay</th>
+                    <th>S.</th>
                     <th></th>
                 </tr>
             </tfoot>
@@ -102,6 +106,7 @@ Toolbar::render();
     var hour = $("#hour").val();
     var order = 1;
     var firstTime = true;
+    var eventoId = 0;
 
     /**** Delete *****/
 
@@ -190,6 +195,37 @@ Toolbar::render();
         $('#modalImportar').modal('hide');
     });
 
+    /**** Mosca2 *****/
+
+    //Mosca2 (modal)
+    $(document).on('click', '.mosca2Modal', function (e) {
+        $('#mosca2Modal').modal('show');
+        eventoId = $(this).attr("data-id");
+    });
+
+    //Mosca2 action
+    $(document).on('click', '#btnMosca2Save', function (e) {
+
+        //Add mosta2
+        $.ajax({
+            url: '<?=Url::site("parrilla/json");?>',
+            data: {
+                eventoId: eventoId,
+                moscaId2: $("#moscaId2").val(),
+                delay: $("#delay").val(),
+                action: "addMosca2",
+            },
+            method: 'get',
+            dataType: 'json',
+        })
+
+        //Reload table
+        tableInit();
+
+        //Close modal
+        $('#mosca2Modal').modal('hide');
+    });
+
     /**** Inits *****/
 
     //DatePickers
@@ -197,6 +233,7 @@ Toolbar::render();
         table = tableInit();
         $("#fecha").datepicker({ dateFormat: "dd-mm-yy" });
         $("#fechaImportar").datepicker({ dateFormat: "dd-mm-yy" });
+        $('input.dateMask').mask("00:00:00:00");
     });
 
     //Date change
@@ -239,7 +276,7 @@ Toolbar::render();
                     firstTime = false;
                 }
                 nRow.setAttribute('id', aData.id);  //Initialize row id for every row
-                nRow.setAttribute('style',"background-color:" + aData[11] + ";"); //Add color
+                nRow.setAttribute('style',"background-color:" + aData[13] + ";"); //Add color
 
             }
         });
@@ -328,7 +365,7 @@ Toolbar::render();
                         <input type="text" name="fecha" class="form-control" id="fechaImportar" value="<?=date("d-m-Y", strtotime("now -1 day"));?>" placeholder="Fecha">
                     </div>
                 </div>
-				<div style='clear:both;'><button type="button" class="btn importBtn btn-primary" id="">Importar</button></div>
+                <div style='clear:both;'><button type="button" class="btn importBtn btn-primary" id="">Importar</button></div>
                 <div class="form-group">
                     <div id="importarParrilla"></div>
                 </div>
@@ -336,6 +373,43 @@ Toolbar::render();
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
                 <button type="button" class="btn importBtn btn-primary" id="">Importar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Mosca2 -->
+<div class="modal fade" id="mosca2Modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Cerrar</span></button>
+                <h4 class="modal-title" id="myModalLabel">Añadir Logo2</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal" role="form">
+                    <label for="entradaId" class="col-sm-3 control-label">
+                        Logo2
+                    </label>
+                    <div class="form-group">
+                        <div class="col-sm-7">
+                            <?=HTML::select("moscaId2", $moscas2, null, array("id" => "moscaId2", "class" => "select2"), null, array("display" => "nombre")); ?>
+                        </div>
+                    </div>
+
+                    <label for="entradaId" class="col-sm-3 control-label">
+                        Delay
+                    </label>
+                    <div class="form-group">
+                        <div class="col-sm-7">
+                            <input type="text" id="delay" name="delay" class="form-control dateMask" value="00:00:00:00" placeholder="HH:MM:SS:FR">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-primary" id="btnMosca2Save">Crear</button>
             </div>
         </div>
     </div>

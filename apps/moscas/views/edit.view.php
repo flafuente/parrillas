@@ -63,7 +63,7 @@ Toolbar::render();
                             Tipo
                         </label>
                         <div class="col-sm-8">
-                            <?=Html::select("tipoId", $mosca->tipos, $mosca->tipoId)?>
+                            <?=Html::select("tipoId", $mosca->tipos, $mosca->tipoId, array('id' => 'tipoId'))?>
                         </div>
                     </div>
                     <!-- Código -->
@@ -93,8 +93,32 @@ Toolbar::render();
                             <input type="text" id="nombre" name="nombre" class="form-control" value="<?=Helper::sanitize($mosca->nombre);?>">
                         </div>
                     </div>
+                    <!-- Duración -->
+                    <div class="form-group" id="duracion_div">
+                        <label class="col-sm-3 control-label">
+                            Duración
+                        </label>
+                        <div class="col-sm-8">
+                            <input type="text" id="duracion" name="duracion" class="form-control dateMask" value="<?=Helper::sanitize($mosca->duracion);?>" placeholder="HH:MM:SS:FR">
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </form>
+
+<script>
+    //Date Mask
+    $('input.dateMask').mask("00:00:00:00");
+
+    $(document).on('change', '#tipoId', function (e) {
+        //ED/FIN
+        if ($(this).val() == 2) {
+            $("#duracion_div").show();
+        } else {
+            $("#duracion_div").hide();
+        }
+    });
+    $("#tipoId").change();
+</script>

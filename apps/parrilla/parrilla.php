@@ -17,6 +17,9 @@ class parrillaController extends Controller
 
     public function index()
     {
+
+        $this->setData("moscas2", Mosca::select(array("tipoId" => 2)));
+
         $html = $this->view("views.parrilla");
         $this->render($html);
 
@@ -74,6 +77,18 @@ class parrillaController extends Controller
                 Evento::actualizarFechas($date, $hour);
                 //Log
                 Log::add(LOG_UPDATE_HOUR_PARRILLA, $_REQUEST);
+            break;
+            //Mosca2 add
+            case "addMosca2":
+                $evento = new Evento($_REQUEST['eventoId']);
+                if ($evento->id) {
+                    $mosca2 = new Mosca($_REQUEST['moscaId2']);
+                    $evento->logo2 = $mosca2->codigo;
+                    $evento->delay = $_REQUEST['delay'];
+                    $evento->update();
+                    //Log
+                    Log::add(LOG_UPDATE_MOSCA2_PARRILLA, $_REQUEST);
+                }
             break;
             //New
             case "new":

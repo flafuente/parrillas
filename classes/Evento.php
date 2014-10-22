@@ -52,6 +52,16 @@ class Evento extends Model
      */
     public $logo;
     /**
+     * Logo2
+     * @var string
+     */
+    public $logo2;
+    /**
+     * Delay
+     * @var string
+     */
+    public $delay;
+    /**
      * Segmento
      * @var string
      */
@@ -463,7 +473,7 @@ class Evento extends Model
 
         return array(
             "id" => $this->id,
-            $this->order,
+            "<button class='btn btn-xs mosca2Modal btn-success' data-id='".$this->id."'><span class='glyphicon glyphicon-plus'></span></button> ".$this->order,
             $this->getFecha(),
             $this->getHora(),
             $this->duracion,
@@ -472,10 +482,12 @@ class Evento extends Model
             $this->titulo,
             $this->tcIn,
             $this->logo,
-            $this->segmento,
-            "<button class='btn btn-xs newModal btn-success' data-order='".$this->order."'><span class='glyphicon glyphicon-plus'></span></a>".
-            "<button class='btn btn-xs importModal btn-primary' data-order='".$this->order."'><span class='glyphicon glyphicon-import'></span></a>".
-            "<button class='btn btn-xs delete btn-danger'><span class='glyphicon glyphicon-remove'></span></a>",
+            $this->logo2,
+            $this->delay,
+            ($this->segmento) ? '<span class="glyphicon glyphicon-ok"></span>' : '<span class="glyphicon glyphicon-remove"></span>',
+            "<button class='btn btn-xs newModal btn-success' data-order='".$this->order."'><span class='glyphicon glyphicon-plus'></span></button>".
+            "<button class='btn btn-xs importModal btn-primary' data-order='".$this->order."'><span class='glyphicon glyphicon-import'></span></button>".
+            "<button class='btn btn-xs delete btn-danger'><span class='glyphicon glyphicon-remove'></span></button>",
             $tipo->color
         );
     }
@@ -484,7 +496,7 @@ class Evento extends Model
     {
         $entrada = new Entrada($this->entradaId);
         $mosca = new Mosca($entrada->moscaId);
-        $mosca2 = new Mosca($entrada->moscaId2);
+        $mosca2 = Mosca::getBy('codigo', $entrada->logo2);
         $tipo = new Tipo($this->tipo);
 
         if ($firstLine) {
@@ -550,9 +562,9 @@ class Evento extends Model
             //dsk_num 16
             str_pad($mosca2->codigo, 16, " ", STR_PAD_RIGHT).
             //dsk_in_time 10
-            "          ".
+            str_pad(substr($this->delay, 1), 10, " ", STR_PAD_RIGHT).
             //dsk_duration 10
-            "          ".
+            str_pad(substr($mosca2->duracion, 1), 10, " ", STR_PAD_RIGHT).
             //dsk2_src 6
             "      ".
             //dsk2_item 16

@@ -22,6 +22,10 @@ body{
 	padding-bottom: 70px;
 }
 
+.container {
+	width: 80%!important;
+}
+
 /* Main Div */
 div.main{
 	margin-top: 20px;
@@ -94,4 +98,11 @@ input[type="text"].is-autocheck-faliure{
 
 tr.clickable{
 	cursor: pointer;
+}
+
+table.dataTable.display tbody tr.even > td:last-child{ 
+	background-color: #fbfbfb;
+}
+table.dataTable.display tbody tr.odd > td:last-child{ 
+	background-color: #f3f3f3;
 }
