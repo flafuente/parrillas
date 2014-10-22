@@ -16,7 +16,7 @@
 <div class="container">
     <section>
         <!-- Fecha,Hora,Duracion,House Number,Tipo,Titulo,TC IN, Logo, Segmento -->
-        <table id="example" class="display" cellspacing="0" width="100%">
+        <table id="example" class="display non-editable" cellspacing="0" width="100%">
             <thead>
                 <tr >
                     <th>Pos</th>
@@ -86,8 +86,7 @@
             "bRetrieve": false,
             "fnRowCallback": function (nRow, aData, iDisplayIndex) {
                 nRow.setAttribute('id', aData.id);  //Initialize row id for every row
-                nRow.setAttribute('style',"background-color:" + aData[11] + ";"); //Add color
-
+                nRow.setAttribute('style',"background-color:" + aData[13] + ";"); //Add color
             }
         });
 

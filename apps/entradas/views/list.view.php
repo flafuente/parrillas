@@ -37,6 +37,7 @@ Toolbar::render();
                             <th><?=Html::sortableLink("id", "Id");?></th>
                             <th><?=Html::sortableLink("nombre", "Nombre");?></th>
                             <th><?=Html::sortableLink("houseNumber", "House Number");?></th>
+                            <th><?=Html::sortableLink("duracion", "Duración");?></th>
                             <th><?=Html::sortableLink("dateInsert", "Fecha creación");?></th>
                             <th><?=Html::sortableLink("dateUpdate", "Fecha actualización");?></th>
                             <th></th>
@@ -48,6 +49,7 @@ Toolbar::render();
                                 <td><?=$entrada->id;?></a></td>
                                 <td><?=Helper::sanitize($entrada->nombre);?></td>
                                 <td><?=Helper::sanitize($entrada->houseNumber);?></td>
+                                <td><?=Helper::sanitize($entrada->duracion);?></td>
                                 <td><?=Helper::humanDate($entrada->dateInsert);?></td>
                                 <td><?=Helper::humanDate($entrada->dateUpdate);?></td>
                                 <td>

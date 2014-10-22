@@ -484,7 +484,7 @@ class Evento extends Model
             $this->logo,
             $this->logo2,
             $this->delay,
-            ($this->segmento) ? '<span class="glyphicon glyphicon-ok"></span>' : '<span class="glyphicon glyphicon-remove"></span>',
+            ($this->segmento) ? '<span class="glyphicon glyphicon-ok"></span>' : '',
             "<button class='btn btn-xs newModal btn-success' data-order='".$this->order."'><span class='glyphicon glyphicon-plus'></span></button>".
             "<button class='btn btn-xs importModal btn-primary' data-order='".$this->order."'><span class='glyphicon glyphicon-import'></span></button>".
             "<button class='btn btn-xs delete btn-danger'><span class='glyphicon glyphicon-remove'></span></button>",

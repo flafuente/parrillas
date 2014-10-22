@@ -37,7 +37,7 @@ Toolbar::render();
     <section>
         <div id="demo">
         <!-- Fecha,Hora,Duracion,House Number,Tipo,Titulo,TC IN, Logo, Segmento -->
-        <table id="example" class="display" cellspacing="0" width="100%">
+        <table id="example" class="display parrilla" cellspacing="0" width="100%">
             <thead>
                 <tr >
                     <th>Pos</th>
