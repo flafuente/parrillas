@@ -179,6 +179,30 @@ class Entrada extends Model
         return Registry::getMessages(true);
     }
 
+    public static function getCapituloByHouseNumber($houseNumber)
+    {
+        $db = Registry::getDb();
+        $query = "SELECT * FROM `entradas` WHERE `houseNumber` = :houseNumber";
+        $params = array(
+            'houseNumber' => $houseNumber,
+        );
+        $rows = $db->Query($query, $params);
+        if (count($rows)) {
+            $entrada = new Entrada($rows[0]);
+            if ($entrada->programaId) {
+                //Lo buscamos en tribo
+                $data = array(
+                    "programaId" => $entrada->programaId,
+                    "capitulo" => $entrada->capitulo,
+                );
+                $res = Api::request("programas/searchCapitulo", $data);
+                if ($res) {
+                    return $res->capitulo;
+                }
+            }
+        }
+    }
+
     /**
      * Insert validation
      *

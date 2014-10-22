@@ -31,4 +31,10 @@ class externalController extends Controller
         $eventos = Evento::select(array("fecha" => $_REQUEST["fecha"], "tipo" => "P"));
         $this->ajax(array("eventos" => $eventos));
     }
+
+    public function capitulosByHouseNumber()
+    {
+        $capitulo = Entrada::getCapituloByHouseNumber($_REQUEST["houseNumber"]);
+        $this->ajax(array("capitulo" => $capitulo));
+    }
 }
