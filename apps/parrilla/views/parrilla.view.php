@@ -41,6 +41,7 @@ Toolbar::render();
             <thead>
                 <tr >
                     <th>Pos</th>
+                    <th></th>
                     <th>Fecha</th>
                     <th>Hora</th>
                     <th>Duracion</th>
@@ -59,6 +60,7 @@ Toolbar::render();
             <tfoot>
                 <tr>
                     <th>Pos</th>
+                    <th></th>
                     <th>Fecha</th>
                     <th>Hora</th>
                     <th>Duracion</th>
@@ -276,7 +278,7 @@ Toolbar::render();
                     firstTime = false;
                 }
                 nRow.setAttribute('id', aData.id);  //Initialize row id for every row
-                nRow.setAttribute('style',"background-color:" + aData[13] + ";"); //Add color
+                nRow.setAttribute('style',"background-color:" + aData[14] + ";"); //Add color
 
             }
         });

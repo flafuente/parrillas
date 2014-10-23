@@ -100,12 +100,19 @@ tr.clickable{
 	cursor: pointer;
 }
 
-table.parrilla tbody tr.even > td:last-child{ 
+table.parrilla tbody tr > th:first-child{
+	width: 25px;
+}
+
+table.parrilla tbody tr.even > td:last-child,
+table.parrilla tbody tr.even > td:nth-child(2){ 
 	background-color: #fbfbfb;
 }
-table.parrilla tbody tr.odd > td:last-child{ 
+table.parrilla tbody tr.odd > td:last-child,
+table.parrilla tbody tr.odd > td:nth-child(2){ 
 	background-color: #f3f3f3;
 }
+
 table.non-editable .mosca2Modal{
 	display:none;
 }

@@ -473,7 +473,8 @@ class Evento extends Model
 
         return array(
             "id" => $this->id,
-            "<button class='btn btn-xs mosca2Modal btn-success' data-id='".$this->id."'><span class='glyphicon glyphicon-plus'></span></button> ".$this->order,
+            $this->order,
+            "<button class='btn btn-xs mosca2Modal btn-success' data-id='".$this->id."'><span class='glyphicon glyphicon-plus'></span></button>",
             $this->getFecha(),
             $this->getHora(),
             $this->duracion,
