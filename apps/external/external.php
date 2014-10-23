@@ -42,7 +42,7 @@ class externalController extends Controller
             }
         } else {
             $status = "error";
-            $error = "Entrada no encontrada";
+            $error = "Entrada no encontrada (".$_REQUEST["id"].")";
         }
         $this->ajax(array("status" => $status, "error" => $error));
     }
