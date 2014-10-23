@@ -273,7 +273,7 @@ Toolbar::render();
             "fnRowCallback": function (nRow, aData, iDisplayIndex) {
                 //First row
                 if (firstTime) {
-                    hour = aData[2].substr(0, 5);
+                    hour = aData[3].substr(0, 5);
                     $("#hour").val(hour);
                     firstTime = false;
                 }
