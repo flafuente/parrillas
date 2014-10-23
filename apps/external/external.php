@@ -25,6 +25,28 @@ class externalController extends Controller
         $this->ajax(array("entrada" => $entrada));
     }
 
+    public function updateEntrada()
+    {
+        $error = null;
+        $entrada = new Entrada($_REQUEST["id"]);
+        if ($entrada->id) {
+            $entrada->programaId = $_REQUEST['programaId'];
+            $entrada->programa = $_REQUEST['programa'];
+            $entrada->capitulo = $_REQUEST['capitulo'];
+            $entrada->titulo = ($entrada->titulo) ? $entrada->titulo : $_REQUEST['titulo'];
+            if ($entrada->update()) {
+                $status = "ok";
+            } else {
+                $status = "error";
+                $error = current(Registry::getMessages())->message;
+            }
+        } else {
+            $status = "error";
+            $error = "Entrada no encontrada";
+        }
+        $this->ajax(array("status" => $status, "error" => $error));
+    }
+
     public function parrilla()
     {
         //Select
