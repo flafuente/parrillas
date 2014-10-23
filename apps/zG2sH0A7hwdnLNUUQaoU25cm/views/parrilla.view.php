@@ -19,17 +19,19 @@
         <table id="example" class="display non-editable" cellspacing="0" width="100%">
             <thead>
                 <tr >
-                    <th>Pos</th>
-                    <th></th>
+                    <th width="20px">Pos</th>
+                    <th width="20px"></th>
                     <th>Fecha</th>
                     <th>Hora</th>
                     <th>Duracion</th>
                     <th>House Number</th>
-                    <th>Tipo</th>
+                    <th width="20px">Tipo</th>
                     <th>Titulo</th>
                     <th>TC IN</th>
-                    <th>Logo</th>
-                    <th>Segmento</th>
+                    <th width="20px">Logo</th>
+                    <th width="20px">Logo2</th>
+                    <th>Delay</th>
+                    <th width="20px">S.</th>
                 </tr>
             </thead>
 
@@ -45,7 +47,9 @@
                     <th>Titulo</th>
                     <th>TC IN</th>
                     <th>Logo</th>
-                    <th>Segmento</th>
+                    <th>Logo2</th>
+                    <th>Delay</th>
+                    <th>S.</th>
                 </tr>
             </tfoot>
 

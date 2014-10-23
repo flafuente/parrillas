@@ -100,10 +100,6 @@ tr.clickable{
 	cursor: pointer;
 }
 
-table.parrilla tbody tr > th:first-child{
-	width: 25px;
-}
-
 table.parrilla tbody tr.even > td:last-child,
 table.parrilla tbody tr.even > td:nth-child(2){ 
 	background-color: #fbfbfb;

@@ -40,20 +40,20 @@ Toolbar::render();
         <table id="example" class="display parrilla" cellspacing="0" width="100%">
             <thead>
                 <tr >
-                    <th>Pos</th>
-                    <th></th>
+                    <th width="20px">Pos</th>
+                    <th width="20px"></th>
                     <th>Fecha</th>
                     <th>Hora</th>
                     <th>Duracion</th>
                     <th>House Number</th>
-                    <th>Tipo</th>
+                    <th width="20px">Tipo</th>
                     <th>Titulo</th>
                     <th>TC IN</th>
-                    <th>Logo</th>
-                    <th>Logo2</th>
+                    <th width="20px">Logo</th>
+                    <th width="20px">Logo2</th>
                     <th>Delay</th>
-                    <th>S.</th>
-                    <th></th>
+                    <th width="20px">S.</th>
+                    <th width="20px"></th>
                 </tr>
             </thead>
 
