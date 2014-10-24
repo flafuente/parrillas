@@ -15,11 +15,13 @@ class entradasController extends Controller
     public function index()
     {
         //Remember filters
-        rememberFilter('search');
-        rememberFilter('limit');
-        rememberFilter('limitStart');
-        rememberFilter('order');
-        rememberFilter('orderDir');
+        if (!$_REQUEST['fresh']) {
+            rememberFilter('search');
+            rememberFilter('limit');
+            rememberFilter('limitStart');
+            rememberFilter('order');
+            rememberFilter('orderDir');
+        }
 
         $config = Registry::getConfig();
         $pag['total'] = 0;

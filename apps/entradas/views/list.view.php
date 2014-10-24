@@ -19,6 +19,7 @@ Toolbar::render();
 
 <div class="main">
     <form method="post" action="<?=Url::site()?>" id="mainForm" name="mainForm" class="form-inline" role="form">
+        <input type="hidden" name="fresh" value="true">
         <input type="hidden" name="app" id="app" value="entradas">
         <input type="hidden" name="action" id="action" value="">
         <!-- Filters -->
