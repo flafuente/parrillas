@@ -9,7 +9,7 @@ class parrillaController extends Controller
         $user = Registry::getUser();
         if (!$user->id) {
             Url::redirect(Url::site("login"));
-        } elseif (strpos($user->username, 'admin') !== FALSE) {
+        } elseif (preg_match('/admin/',$user->username)) {
             Registry::addMessage("Sólo los administradores pueden gestionar la parrilla", "error");
             Url::redirect(Url::site("zG2sH0A7hwdnLNUUQaoU25cm"));
         }
