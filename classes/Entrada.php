@@ -366,6 +366,14 @@ class Entrada extends Model
             $where .= "AND `tipoId` IN (SELECT `id` FROM `tipos` WHERE `codigo` = :tipo) ";
             $params[":tipo"] = $data["tipo"];
         }
+        //Vinculada
+        if (isset($data["vinculada"]) && $data['vinculada'] != -1) {
+            if ($data['vinculada']) {
+                $where .= "AND `programaId` > 0 ";
+            } else {
+                $where .= "AND (`programaId` = 0 OR  `programaId` IS NULL) ";
+            }
+        }
         $query .= $where;
         //Total
         $totalQuery = "SELECT * FROM `entradas` ".$where;

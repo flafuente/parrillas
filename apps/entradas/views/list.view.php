@@ -28,6 +28,10 @@ Toolbar::render();
             <div class="col-sm-3 col-xs-6 filter">
                 <?=Html::search();?>
             </div>
+            <!-- Vinculado -->
+            <div class="col-sm-3 col-xs-6 filter">
+                <?=Html::select("vinculada", array("-1" => '-- Estado --', '1' => 'Vinculado', '0' => 'No vinculado'), $_REQUEST["vinculada"], array("class" => "select2 change-submit"))?>
+            </div>
         </div>
         <!-- Results -->
         <?php if (count($results)) { ?>
